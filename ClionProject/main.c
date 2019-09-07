@@ -10,6 +10,8 @@ int main (int argc, char *argv[])
 
     tablero_t *tablero = tablero_inicializar("board.txt");
 
+    tablero_get(tablero);
+
     tablero_destruir(tablero);
 
     return 0;

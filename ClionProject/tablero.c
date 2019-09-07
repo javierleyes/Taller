@@ -35,7 +35,7 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
                 tablero->valores_iniciales[posicion_tablero].modificable = false;
             }
 
-            printf("%d",tablero->valores_iniciales[posicion_tablero].modificable);
+//            printf("%d",tablero->valores_iniciales[posicion_tablero].modificable);
 
             posicion_tablero++;
         }
@@ -44,6 +44,30 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
     fclose(handler_tablero_inicial);
 
     return tablero;
+}
+
+void tablero_get(tablero_t *self) {
+
+    printf("U===========U===========U===========U\n");
+
+    for(int j = 0; j < 81; j = j + 9) {
+        for (int i = j; i < (j + 9); i = i + 3) {
+            printf("U");
+            printf("%1s%1d%1s", " ", self->valores_juego[i].valor, " ");
+            printf("|");
+            printf("%1s%1d%1s", " ", self->valores_juego[i + 1].valor, " ");
+            printf("|");
+            printf("%1s%1d%1s", " ", self->valores_juego[i + 2].valor, " ");
+        }
+
+        printf("U\n");
+
+        if ((((j + 1) % 19) == 0) || (((j + 1) % 46) == 0) || (((j + 1) % 73) == 0)) {
+            printf("U===========U===========U===========U\n");
+        } else {
+            printf("U---+---+---U---+---+---U---+---+---U\n");
+        }
+    }
 }
 
 void tablero_destruir(tablero_t *self) {
