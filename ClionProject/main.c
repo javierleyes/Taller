@@ -6,7 +6,7 @@
 
 int main (int argc, char *argv[])
 {
-    printf("Sudoku\n");
+    printf("Sudoku \n");
 
     tablero_t *tablero = tablero_inicializar("board.txt");
 

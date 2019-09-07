@@ -1,7 +1,7 @@
 #include "tablero.h"
 
 struct celda {
-    bool es_modificable;
+    bool modificable;
     char valor;
 };
 
@@ -27,22 +27,18 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
     while ((valor_inicial = fgetc(handler_tablero_inicial)) != EOF) {
         if ( (valor_inicial != ' ') && (valor_inicial != '\n') ) {
-            //putchar(valor_inicial);
+//            putchar(valor_inicial);
 
             if (valor_inicial == '0') {
-                tablero->valores_iniciales[posicion_tablero].es_modificable = true;
+                tablero->valores_iniciales[posicion_tablero].modificable = true;
             } else {
-                tablero->valores_iniciales[posicion_tablero].es_modificable = false;
+                tablero->valores_iniciales[posicion_tablero].modificable = false;
             }
 
-            strcpy(tablero->valores_iniciales[posicion_tablero].valor, &valor_inicial);
+            printf("%d",tablero->valores_iniciales[posicion_tablero].modificable);
 
-            //printf("%s", tablero->valores_iniciales[posicion_tablero].valor);
-
-            //strncpy(tablero->valores_iniciales[posicion_tablero]->.valor, &valor_inicial, sizeof(char));
+            posicion_tablero++;
         }
-
-        posicion_tablero++;
     }
 
     fclose(handler_tablero_inicial);
