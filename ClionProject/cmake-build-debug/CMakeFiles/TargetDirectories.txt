@@ -1,0 +1,3 @@
+/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir
+/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/edit_cache.dir

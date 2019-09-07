@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/javi/repository/Taller/ClionProject/main.c
+stdlib.h
+-
+stdio.h
+-
+string.h
+-
+tablero.h
+/home/javi/repository/Taller/ClionProject/tablero.h
+
+/home/javi/repository/Taller/ClionProject/tablero.h
+stdlib.h
+-
+stdio.h
+-
+string.h
+-
+

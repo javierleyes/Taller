@@ -5,10 +5,11 @@
 	<string.h>
 	"tablero.h"
 
-1567817703 source:/home/javi/repository/Taller/Taller_TP1/tablero.c
+1567828517 source:/home/javi/repository/Taller/Taller_TP1/tablero.c
 	"tablero.h"
 
-1567810074 /home/javi/repository/Taller/Taller_TP1/tablero.h
+1567820819 /home/javi/repository/Taller/Taller_TP1/tablero.h
 	<stdlib.h>
 	<stdio.h>
+	<string.h>
 

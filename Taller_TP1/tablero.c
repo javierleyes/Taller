@@ -8,9 +8,12 @@ struct tablero {
 
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
+    // poner esto en una funcion
     tablero_t *tablero = calloc(1, sizeof(tablero_t));
     tablero->tablero_inicial = calloc(741, sizeof(char));
     tablero->tabler_juego = calloc(741, sizeof(char));
+
+    char *valores = calloc(700, sizeof(char));
 
     if (!tablero) {
        return NULL;
@@ -28,10 +31,24 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
         return 1;
     }
 
-    //while ( (caracter = fgetc(tablero_txt) ) != EOF ) {
-    //    putchar(caracter);
-    //}
 
+
+
+    putchar(valores[0]);
+
+    while ((caracter = fgetc(tablero_txt)) != EOF) {
+
+        //int j = 0;
+
+        if ( (caracter != ' ') && (caracter != '\n') ){
+
+            putchar(caracter);
+
+
+          //  j++;
+        }
+
+    }
 
 
     int posicion_actual = 0;
@@ -620,10 +637,6 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
     tablero->tablero_inicial[posicion_actual] = '\n';
     posicion_actual = posicion_actual + 1;
-
-
-
-
 
     // Principal
 
