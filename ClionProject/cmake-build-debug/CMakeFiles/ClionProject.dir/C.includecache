@@ -6,13 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/javi/repository/Taller/ClionProject/main.c
-stdlib.h
--
-stdio.h
--
-string.h
--
+/home/javi/repository/Taller/ClionProject/tablero.c
 tablero.h
 /home/javi/repository/Taller/ClionProject/tablero.h
 
@@ -22,5 +16,7 @@ stdlib.h
 stdio.h
 -
 string.h
+-
+stdbool.h
 -
 

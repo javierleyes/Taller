@@ -6,11 +6,11 @@
 
 int main (int argc, char *argv[])
 {
-    printf("\nPRUEBAS BASICAS\n");
+    printf("Sudoku\n");
 
     tablero_t *tablero = tablero_inicializar("board.txt");
 
-    //tablero_destruir(tablero);
+    tablero_destruir(tablero);
 
     return 0;
 }

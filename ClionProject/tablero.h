@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+
+typedef struct celda celda_t;
 
 typedef struct tablero tablero_t;
 
@@ -13,6 +16,6 @@ tablero_t *tablero_inicializar(const char *nombre_archivo);
 
 //void tablero_mostrar(tablero_t *self);
 
-//void tablero_destruir(tablero_t *self);
+void tablero_destruir(tablero_t *self);
 
 #endif //TABLERO_H
