@@ -1,0 +1,3 @@
+/home/javi/repository/Taller/TP1/Code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/javi/repository/Taller/TP1/Code/cmake-build-debug/CMakeFiles/Code.dir
+/home/javi/repository/Taller/TP1/Code/cmake-build-debug/CMakeFiles/edit_cache.dir

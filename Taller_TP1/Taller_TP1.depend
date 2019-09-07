@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1567810810 source:/home/javi/repository/Taller/Taller_TP1/main.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"tablero.h"
+
+1567817703 source:/home/javi/repository/Taller/Taller_TP1/tablero.c
+	"tablero.h"
+
+1567810074 /home/javi/repository/Taller/Taller_TP1/tablero.h
+	<stdlib.h>
+	<stdio.h>
+
