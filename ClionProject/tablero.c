@@ -2,7 +2,7 @@
 
 struct celda {
     bool modificable;
-    char valor;
+    int valor;
 };
 
 struct tablero {
@@ -29,11 +29,11 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
         if ( (valor_inicial != ' ') && (valor_inicial != '\n') ) {
 //            putchar(valor_inicial);
 
-            if (valor_inicial == '0') {
+//            if (valor_inicial == '0') {
                 tablero->valores_iniciales[posicion_tablero].modificable = true;
-            } else {
-                tablero->valores_iniciales[posicion_tablero].modificable = false;
-            }
+//            } else {
+//                tablero->valores_iniciales[posicion_tablero].modificable = false;
+//            }
 
 //            printf("%d",tablero->valores_iniciales[posicion_tablero].modificable);
 
@@ -47,6 +47,8 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 }
 
 void tablero_get(tablero_t *self) {
+
+    printf("Comando GET \n");
 
     printf("U===========U===========U===========U\n");
 
@@ -68,6 +70,30 @@ void tablero_get(tablero_t *self) {
             printf("U---+---+---U---+---+---U---+---+---U\n");
         }
     }
+}
+
+void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y) {
+
+    printf("%s%d%s%d%s%d%s","Comando PUT ", valor, " in ", coordenada_x, ",", coordenada_y, "\n");
+
+    int posicion_tablero = (coordenada_x - 1) + ((coordenada_y - 1) * 9);
+
+    if (self->valores_juego[posicion_tablero].modificable == false) {
+        printf("La celda no se puede modificar \n");
+
+        return;
+    }
+
+    self->valores_juego[posicion_tablero].valor = valor;
+
+    tablero_get(self);
+}
+
+void tablero_exit(tablero_t *self) {
+
+    // cerrar socket
+
+    tablero_destruir(self);
 }
 
 void tablero_destruir(tablero_t *self) {
