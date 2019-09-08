@@ -174,11 +174,11 @@ void tablero_get(tablero_t *self) {
     }
 }
 
-void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y) {
+void tablero_put(tablero_t *self, int valor, int fila, int columna) {
 
-    printf("%s%d%s%d%s%d%s","\nComando PUT ", valor, " in ", coordenada_x, ",", coordenada_y, "\n");
+    printf("%s%d%s%d%s%d%s", "\nComando PUT ", valor, " in ", fila, ",", columna, "\n");
 
-    int posicion_tablero = (coordenada_x - 1) + ((coordenada_y - 1) * 9);
+    int posicion_tablero = (((fila - 1) * 9) + ((columna - 1)));
 
     if (self->valores_juego[posicion_tablero].modificable == false) {
         printf("La celda no se puede modificar \n");
