@@ -52,8 +52,8 @@ void tablero_get(tablero_t *self) {
 
     printf("U===========U===========U===========U\n");
 
-    for(int j = 0; j < 81; j = j + 9) {
-        for (int i = j; i < (j + 9); i = i + 3) {
+    for(int j = 0; j < 81; j += 9) {
+        for (int i = j; i < (j + 9); i += 3) {
             printf("U");
 
             if (self->valores_juego[i].valor != 0) {
@@ -104,6 +104,19 @@ void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y)
     self->valores_juego[posicion_tablero].valor = valor;
 
     tablero_get(self);
+}
+
+bool tablero_verify(tablero_t *self) {
+
+    printf("\nComando verify \n");
+
+    char respuesta[] = "ok";
+
+    printf("OK\n");
+
+    printf("ERROR\n");
+
+    return true;
 }
 
 void tablero_resetear(tablero_t *self) {
