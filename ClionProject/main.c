@@ -6,6 +6,40 @@
 
 int main (int argc, char *argv[])
 {
+    if () {
+        printf("Modo no soportado, el primer parametro debe ser server o client\n");
+        return 1;
+    }
+
+    if (argc == 2) {
+
+        if (strcmp(argv[1],"server") == 0) {
+            printf("Uso: ./tp server <puerto>\n");
+            return 1;
+        }
+
+        if (strcmp(argv[1],"client") == 0) {
+            printf("Uso: ./tp client <host> <puerto>\n");
+            return 1;
+        }
+
+        printf("Modo no soportado, el primer parametro debe ser server o client\n");
+        return 1;
+    }
+
+    if ( (strcmp(argv[1],"server") == 0) && (argc == 3) ) {
+        printf("Modo server \n");
+        return 0;
+    }
+
+    if ( (strcmp(argv[1], "client") == 0) && (argc == 4) ) {
+        printf("Modo client \n");
+        return 0;
+    }
+
+    printf("Modo no soportado, el primer parametro debe ser server o client\n");
+    return 1;
+
     printf("Sudoku \n");
 
     tablero_t *tablero = tablero_inicializar("board.txt");
