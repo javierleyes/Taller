@@ -12,6 +12,8 @@ struct tablero {
 
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
+    printf("Comando inicializar \n");
+
     tablero_t *tablero = calloc(1, sizeof(tablero_t));
     tablero->valores_iniciales = calloc(81, sizeof(celda_t));
     tablero->valores_juego = calloc(81, sizeof(celda_t));
@@ -27,19 +29,20 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
     while ((valor_inicial = fgetc(handler_tablero_inicial)) != EOF) {
         if ( (valor_inicial != ' ') && (valor_inicial != '\n') ) {
-//            putchar(valor_inicial);
+            putchar(valor_inicial);
 
-//            if (valor_inicial == '0') {
-                tablero->valores_iniciales[posicion_tablero].modificable = true;
-//            } else {
-//                tablero->valores_iniciales[posicion_tablero].modificable = false;
-//            }
-
-//            printf("%d",tablero->valores_iniciales[posicion_tablero].modificable);
+            tablero->valores_iniciales[posicion_tablero].modificable = (valor_inicial == '0') ? true : false;
+            tablero->valores_iniciales[posicion_tablero].valor = atoi(&valor_inicial);
 
             posicion_tablero++;
         }
     }
+
+    printf("\n");
+    for (int k = 0; k < 81; k++) {
+        printf("%d", tablero->valores_iniciales[k].valor);
+    }
+    printf("\n");
 
     fclose(handler_tablero_inicial);
 
@@ -55,14 +58,14 @@ void tablero_get(tablero_t *self) {
     for(int j = 0; j < 81; j = j + 9) {
         for (int i = j; i < (j + 9); i = i + 3) {
             printf("U");
-            printf("%1s%1d%1s", " ", self->valores_juego[i].valor, " ");
+            printf("%1s%d%1s", " ", self->valores_juego[i].valor, " ");
             printf("|");
-            printf("%1s%1d%1s", " ", self->valores_juego[i + 1].valor, " ");
+            printf("%1s%d%1s", " ", self->valores_juego[i + 1].valor, " ");
             printf("|");
-            printf("%1s%1d%1s", " ", self->valores_juego[i + 2].valor, " ");
+            printf("%1s%d%1s", " ", self->valores_juego[i + 2].valor, " ");
         }
 
-        printf("U\n");
+        printf("U \n");
 
         if ((((j + 1) % 19) == 0) || (((j + 1) % 46) == 0) || (((j + 1) % 73) == 0)) {
             printf("U===========U===========U===========U\n");

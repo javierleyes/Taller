@@ -16,10 +16,12 @@ void tablero_get(tablero_t *self);
 
 void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y);
 
-//void tablero_resetear(tablero_t *self);
-
 void tablero_exit(tablero_t *self);
 
 void tablero_destruir(tablero_t *self);
+
+//void tablero_resetear(tablero_t *self);
+
+//char tablero_verify(tablero_t *self);
 
 #endif //TABLERO_H
