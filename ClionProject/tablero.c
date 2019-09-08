@@ -133,6 +133,21 @@ bool tablero_verify(tablero_t *self) {
         }
     }
 
+    // valido columnas
+    for (int j = 0; j < 9; j++) {
+
+        for (int i = 0; i < 9; i++) {
+            valores[i] = self->valores_juego[(j + (i * 9))].valor;
+        }
+
+        valido = validar_repetidos(valores);
+
+        if (!valido) {
+            printf("ERROR\n");
+            return false;
+        }
+    }
+
     printf("OK\n");
 
     return true;
