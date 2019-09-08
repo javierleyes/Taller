@@ -12,7 +12,7 @@ struct tablero {
 
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
-    printf("Comando inicializar \n");
+    printf("\nFuncion inicializar \n");
 
     tablero_t *tablero = calloc(1, sizeof(tablero_t));
     tablero->valores_iniciales = calloc(81, sizeof(celda_t));
@@ -34,6 +34,9 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
             tablero->valores_iniciales[posicion_tablero].modificable = (valor_inicial == '0') ? true : false;
             tablero->valores_iniciales[posicion_tablero].valor = (valor_inicial - '0');
 
+            tablero->valores_juego[posicion_tablero].modificable = (valor_inicial == '0') ? true : false;
+            tablero->valores_juego[posicion_tablero].valor = (valor_inicial - '0');
+
             posicion_tablero++;
         }
     }
@@ -45,7 +48,7 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
 void tablero_get(tablero_t *self) {
 
-    printf("Comando GET \n");
+    printf("\nComando GET \n");
 
     printf("U===========U===========U===========U\n");
 
@@ -71,7 +74,7 @@ void tablero_get(tablero_t *self) {
 
 void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y) {
 
-    printf("%s%d%s%d%s%d%s","Comando PUT ", valor, " in ", coordenada_x, ",", coordenada_y, "\n");
+    printf("%s%d%s%d%s%d%s","\nComando PUT ", valor, " in ", coordenada_x, ",", coordenada_y, "\n");
 
     int posicion_tablero = (coordenada_x - 1) + ((coordenada_y - 1) * 9);
 
@@ -88,12 +91,17 @@ void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y)
 
 void tablero_exit(tablero_t *self) {
 
+    printf("\nComando exito \n");
+    
     // cerrar socket
 
     tablero_destruir(self);
 }
 
 void tablero_destruir(tablero_t *self) {
+
+    printf("\nFuncion destruir \n");
+
     free(self->valores_iniciales);
     free(self->valores_juego);
     free(self);
