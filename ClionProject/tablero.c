@@ -55,11 +55,28 @@ void tablero_get(tablero_t *self) {
     for(int j = 0; j < 81; j = j + 9) {
         for (int i = j; i < (j + 9); i = i + 3) {
             printf("U");
-            printf("%1s%d%1s", " ", self->valores_juego[i].valor, " ");
+
+            if (self->valores_juego[i].valor != 0) {
+                printf("%1s%d%1s", " ", self->valores_juego[i].valor, " ");
+            } else {
+                printf("%1s%1s%1s", " ", " ", " ");
+            }
+
             printf("|");
-            printf("%1s%d%1s", " ", self->valores_juego[i + 1].valor, " ");
+
+            if (self->valores_juego[i + 1].valor != 0) {
+                printf("%1s%d%1s", " ", self->valores_juego[i + 1].valor, " ");
+            } else {
+                printf("%1s%1s%1s", " ", " ", " ");
+            }
+
             printf("|");
-            printf("%1s%d%1s", " ", self->valores_juego[i + 2].valor, " ");
+
+            if (self->valores_juego[i + 2].valor != 0) {
+                printf("%1s%d%1s", " ", self->valores_juego[i + 2].valor, " ");
+            } else {
+                printf("%1s%1s%1s", " ", " ", " ");
+            }
         }
 
         printf("U \n");
