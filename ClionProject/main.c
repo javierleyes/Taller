@@ -12,7 +12,11 @@ int main (int argc, char *argv[])
 
     tablero_get(tablero);
 
-    tablero_put(tablero, 4, 5, 5);
+    tablero_verify(tablero);
+
+    tablero_put(tablero, 5, 5, 5);
+
+    tablero_verify(tablero);
 
     tablero_resetear(tablero);
 

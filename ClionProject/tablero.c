@@ -10,6 +10,8 @@ struct tablero {
     celda_t *valores_juego;
 };
 
+bool validar_repetidos(int pInt[9]);
+
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
     printf("\nFuncion inicializar \n");
@@ -28,6 +30,7 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
     int posicion_tablero = 0;
 
     while ((valor_inicial = fgetc(handler_tablero_inicial)) != EOF) {
+
         if ( (valor_inicial != ' ') && (valor_inicial != '\n') ) {
 //            putchar(valor_inicial);
 
@@ -53,7 +56,9 @@ void tablero_get(tablero_t *self) {
     printf("U===========U===========U===========U\n");
 
     for(int j = 0; j < 81; j += 9) {
+
         for (int i = j; i < (j + 9); i += 3) {
+
             printf("U");
 
             if (self->valores_juego[i].valor != 0) {
@@ -110,11 +115,25 @@ bool tablero_verify(tablero_t *self) {
 
     printf("\nComando verify \n");
 
-    char respuesta[] = "ok";
+    int valores[9];
+    bool valido = true;
+
+    // valido filas
+    for (int j = 0; j < 81; j += 9) {
+
+        for (int i = 0; i < 9; i++) {
+            valores[i] = self->valores_juego[j + i].valor;
+        }
+
+        valido = validar_repetidos(valores);
+
+        if (!valido) {
+            printf("ERROR\n");
+            return false;
+        }
+    }
 
     printf("OK\n");
-
-    printf("ERROR\n");
 
     return true;
 }
@@ -144,4 +163,23 @@ void tablero_destruir(tablero_t *self) {
     free(self->valores_iniciales);
     free(self->valores_juego);
     free(self);
+}
+
+//**************************************************************************************************
+//****************************************FUNCIONES PRIVADAS****************************************
+//**************************************************************************************************
+
+bool validar_repetidos(int valores[]) {
+
+    for (int i = 0; i < 9; i++) {
+
+        for (int j = i + 1; j < 9; j++) {
+
+            if ( (valores[i] == valores[j]) && (valores[i] != 0) ) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
