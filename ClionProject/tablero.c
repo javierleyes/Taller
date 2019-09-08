@@ -14,15 +14,39 @@ struct tablero {
 //*************************************** FUNCIONES PRIVADAS ***************************************
 //**************************************************************************************************
 
-bool validar_repetidos(int valores[]) {
+bool hay_valores_repetidos(int *valores) {
 
     for (int i = 0; i < 9; i++) {
 
         for (int j = i + 1; j < 9; j++) {
 
             if ( (valores[i] == valores[j]) && (valores[i] != 0) ) {
-                return false;
+                return true;
             }
+        }
+    }
+
+    return false;
+}
+
+bool validar_sectores(tablero_t *self) {
+    int valores[9];
+    int posicion_tablero = 0;
+
+    for (int i = 0; i < 9; i++) {
+
+        for (int j = 0; j < 9; j++) {
+
+            valores[j] = self->valores_juego[posicion_tablero].valor;
+            posicion_tablero++;
+
+            if ( (posicion_tablero % 3) == 0 ) {
+                posicion_tablero += 6;
+            }
+        }
+
+        if (hay_valores_repetidos(valores)) {
+            return false;
         }
     }
 
@@ -139,61 +163,44 @@ bool tablero_verify(tablero_t *self) {
     int valores[9];
     bool valido = true;
 
-    // valido filas
-    for (int j = 0; j < 81; j += 9) {
+//    // valido filas
+//    for (int j = 0; j < 81; j += 9) {
+//
+//        for (int i = 0; i < 9; i++) {
+//            valores[i] = self->valores_juego[j + i].valor;
+//        }
+//
+//        valido = hay_valores_repetidos(valores);
+//
+//        if (!valido) {
+//            printf("ERROR\n");
+//            return false;
+//        }
+//    }
+//
+//    // valido columnas
+//    for (int j = 0; j < 9; j++) {
+//
+//        for (int i = 0; i < 9; i++) {
+//            valores[i] = self->valores_juego[(j + (i * 9))].valor;
+//        }
+//
+//        valido = hay_valores_repetidos(valores);
+//
+//        if (!valido) {
+//            printf("ERROR\n");
+//            return false;
+//        }
+//    }
 
-        for (int i = 0; i < 9; i++) {
-            valores[i] = self->valores_juego[j + i].valor;
-        }
+    valido = validar_sectores(self);
 
-        valido = validar_repetidos(valores);
-
-        if (!valido) {
-            printf("ERROR\n");
-            return false;
-        }
-    }
-
-    // valido columnas
-    for (int j = 0; j < 9; j++) {
-
-        for (int i = 0; i < 9; i++) {
-            valores[i] = self->valores_juego[(j + (i * 9))].valor;
-        }
-
-        valido = validar_repetidos(valores);
-
-        if (!valido) {
-            printf("ERROR\n");
-            return false;
-        }
-    }
-
-    // valido sectores
-    int posicion_tablero = 0;
-
-    for (int i = 0; i < 9; i++) {
-
-        for (int j = 0; j < 9; j++) {
-
-            valores[j] = self->valores_juego[posicion_tablero].valor;
-            posicion_tablero++;
-
-            if ( (posicion_tablero % 3) == 0 ) {
-                posicion_tablero += 6;
-            }
-        }
-
-        valido = validar_repetidos(valores);
-
-        if (!valido) {
-            printf("ERROR\n");
-            return false;
-        }
+    if (!valido) {
+        printf("ERROR\n");
+        return false;
     }
 
     printf("OK\n");
-
     return true;
 }
 
