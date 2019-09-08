@@ -148,6 +148,29 @@ bool tablero_verify(tablero_t *self) {
         }
     }
 
+    // valido sectores
+    int posicion_tablero = 0;
+
+    for (int i = 0; i < 9; i++) {
+
+        for (int j = 0; j < 9; j++) {
+
+            valores[j] = self->valores_juego[posicion_tablero].valor;
+            posicion_tablero++;
+
+            if ( (posicion_tablero % 3) == 0 ) {
+                posicion_tablero += 6;
+            }
+        }
+
+        valido = validar_repetidos(valores);
+
+        if (!valido) {
+            printf("ERROR\n");
+            return false;
+        }
+    }
+
     printf("OK\n");
 
     return true;

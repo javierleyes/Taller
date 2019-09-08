@@ -14,7 +14,7 @@ int main (int argc, char *argv[])
 
     tablero_verify(tablero);
 
-    tablero_put(tablero, 7, 5, 5);
+    tablero_put(tablero, 3, 3, 3);
 
     tablero_verify(tablero);
 
