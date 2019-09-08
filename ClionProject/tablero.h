@@ -20,7 +20,7 @@ void tablero_exit(tablero_t *self);
 
 void tablero_destruir(tablero_t *self);
 
-//void tablero_resetear(tablero_t *self);
+void tablero_resetear(tablero_t *self);
 
 //char tablero_verify(tablero_t *self);
 

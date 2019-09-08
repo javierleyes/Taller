@@ -89,10 +89,19 @@ void tablero_put(tablero_t *self, int valor, int coordenada_x, int coordenada_y)
     tablero_get(self);
 }
 
+void tablero_resetear(tablero_t *self) {
+
+    printf("\nComando resetear \n");
+
+    for (int i = 0; i < 81; i++) {
+        memcpy(&(self->valores_juego[i]).valor, &(self->valores_iniciales[i]).valor, sizeof(int));
+    }
+}
+
 void tablero_exit(tablero_t *self) {
 
     printf("\nComando exito \n");
-    
+
     // cerrar socket
 
     tablero_destruir(self);
