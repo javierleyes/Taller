@@ -29,20 +29,14 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
     while ((valor_inicial = fgetc(handler_tablero_inicial)) != EOF) {
         if ( (valor_inicial != ' ') && (valor_inicial != '\n') ) {
-            putchar(valor_inicial);
+//            putchar(valor_inicial);
 
             tablero->valores_iniciales[posicion_tablero].modificable = (valor_inicial == '0') ? true : false;
-            tablero->valores_iniciales[posicion_tablero].valor = atoi(&valor_inicial);
+            tablero->valores_iniciales[posicion_tablero].valor = (valor_inicial - '0');
 
             posicion_tablero++;
         }
     }
-
-    printf("\n");
-    for (int k = 0; k < 81; k++) {
-        printf("%d", tablero->valores_iniciales[k].valor);
-    }
-    printf("\n");
 
     fclose(handler_tablero_inicial);
 
