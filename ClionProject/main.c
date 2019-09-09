@@ -6,7 +6,7 @@
 
 int main (int argc, char *argv[])
 {
-    if () {
+    if (argc == 1) {
         printf("Modo no soportado, el primer parametro debe ser server o client\n");
         return 1;
     }
@@ -27,12 +27,12 @@ int main (int argc, char *argv[])
         return 1;
     }
 
-    if ( (strcmp(argv[1],"server") == 0) && (argc == 3) ) {
+    if ((argc == 3) && (strcmp(argv[1],"server") == 0)) {
         printf("Modo server \n");
         return 0;
     }
 
-    if ( (strcmp(argv[1], "client") == 0) && (argc == 4) ) {
+    if ((argc == 4) && (strcmp(argv[1],"client") == 0)) {
         printf("Modo client \n");
         return 0;
     }
