@@ -48,7 +48,6 @@ bool validar_filas(tablero_t * self) {
 
 bool validar_columnas(tablero_t *self) {
     int valores[9];
-    bool valido = true;
 
     for (int j = 0; j < 9; j++) {
 
@@ -69,6 +68,16 @@ bool validar_sectores(tablero_t *self) {
     int posicion_tablero = 0;
 
     for (int i = 0; i < 9; i++) {
+
+        posicion_tablero = (i * 3);
+
+        if ((i > 2) && (i < 6)) {
+            posicion_tablero += 18;
+        }
+
+        if (i > 5) {
+            posicion_tablero += 36;
+        }
 
         for (int j = 0; j < 9; j++) {
 

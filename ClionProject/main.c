@@ -48,7 +48,7 @@ bool validar_modo_operacion(int argc, char *argv[]) {
 
 int main (int argc, char *argv[])
 {
-    return validar_modo_operacion(argc, argv);
+//    return validar_modo_operacion(argc, argv);
 
     printf("Sudoku \n");
 
