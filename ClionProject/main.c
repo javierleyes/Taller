@@ -50,7 +50,8 @@ int main (int argc, char *argv[])
 {
 //    return validar_modo_operacion(argc, argv);
 
-//  comando client
+
+//  comandos client
 
     char *input = calloc(13, sizeof(char));
     char *comando = calloc(7, sizeof(char));
@@ -81,16 +82,18 @@ int main (int argc, char *argv[])
 
     if (strcmp(comando_compuesto, "put") == 0) {
 
-        if ((((input[9]-'0') > 0) && ((input[9]-'0') < 10) ) && (((input[11]-'0') > 0) && ((input[11]-'0') < 10))) {
-            printf("Indices validos");
+        if ((((input[9] - '0') > 0) && ((input[9] - '0') < 10)) &&
+            (((input[11] - '0') > 0) && ((input[11] - '0') < 10))) {
+//            printf("Indices validos");
+
+            if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
+//                printf("valor valido");
+            } else {
+                printf("Error en el valor ingresado. Rango soportado: [1,9]\n");
+            }
+
         } else {
             printf("Error en los indices. Rango soportado: [1,9]\n");
-        }
-
-        if ( ((input[4] - '0') > 0) && ((input[4] - '0') < 10) ) {
-            printf("valor valido");
-        } else {
-            printf("Error en el valor ingresado. Rango soportado: [1,9]\n");
         }
     }
 
@@ -101,8 +104,6 @@ int main (int argc, char *argv[])
     free(columna);
 
     printf("Modo no soportado, el primer parametro debe ser server o client\n");
-
-
 
 
 
