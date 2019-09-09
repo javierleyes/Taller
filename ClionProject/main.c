@@ -4,8 +4,11 @@
 
 #include "tablero.h"
 
-int main (int argc, char *argv[])
-{
+//**************************************************************************************************
+//*************************************** FUNCIONES PRIVADAS ***************************************
+//**************************************************************************************************
+
+bool validar_modo_operacion(int argc, char *argv[]) {
     if (argc == 1) {
         printf("Modo no soportado, el primer parametro debe ser server o client\n");
         return 1;
@@ -39,6 +42,13 @@ int main (int argc, char *argv[])
 
     printf("Modo no soportado, el primer parametro debe ser server o client\n");
     return 1;
+}
+
+//**************************************************************************************************
+
+int main (int argc, char *argv[])
+{
+    return validar_modo_operacion(argc, argv);
 
     printf("Sudoku \n");
 
