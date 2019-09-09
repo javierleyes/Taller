@@ -14,7 +14,7 @@ struct tablero {
 //*************************************** FUNCIONES PRIVADAS ***************************************
 //**************************************************************************************************
 
-bool hay_valores_repetidos(int *valores) {
+static bool _hay_valores_repetidos(int *valores) {
 
     for (int i = 0; i < 9; i++) {
 
@@ -29,7 +29,7 @@ bool hay_valores_repetidos(int *valores) {
     return false;
 }
 
-bool validar_filas(tablero_t * self) {
+static bool _validar_filas(tablero_t * self) {
     int valores[9];
 
     for (int j = 0; j < 81; j += 9) {
@@ -38,7 +38,7 @@ bool validar_filas(tablero_t * self) {
             valores[i] = self->valores_juego[j + i].valor;
         }
 
-        if (hay_valores_repetidos(valores)) {
+        if (_hay_valores_repetidos(valores)) {
             return false;
         }
     }
@@ -46,7 +46,7 @@ bool validar_filas(tablero_t * self) {
     return true;
 }
 
-bool validar_columnas(tablero_t *self) {
+static bool _validar_columnas(tablero_t *self) {
     int valores[9];
 
     for (int j = 0; j < 9; j++) {
@@ -55,7 +55,7 @@ bool validar_columnas(tablero_t *self) {
             valores[i] = self->valores_juego[(j + (i * 9))].valor;
         }
 
-        if (hay_valores_repetidos(valores)) {
+        if (_hay_valores_repetidos(valores)) {
             return false;
         }
     }
@@ -63,7 +63,7 @@ bool validar_columnas(tablero_t *self) {
     return true;
 }
 
-bool validar_sectores(tablero_t *self) {
+static bool _validar_sectores(tablero_t *self) {
     int valores[9];
     int posicion_tablero = 0;
 
@@ -89,7 +89,7 @@ bool validar_sectores(tablero_t *self) {
             }
         }
 
-        if (hay_valores_repetidos(valores)) {
+        if (_hay_valores_repetidos(valores)) {
             return false;
         }
     }
@@ -204,17 +204,17 @@ bool tablero_verify(tablero_t *self) {
 
     printf("\nComando verify \n");
 
-    if (!validar_filas(self)) {
+    if (!_validar_filas(self)) {
         printf("ERROR\n");
         return false;
     }
 
-    if (!validar_columnas(self)) {
+    if (!_validar_columnas(self)) {
         printf("ERROR\n");
         return false;
     }
 
-    if (!validar_sectores(self)) {
+    if (!_validar_sectores(self)) {
         printf("ERROR\n");
         return false;
     }
