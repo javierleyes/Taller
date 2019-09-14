@@ -32,7 +32,8 @@ static bool validar_modo_operacion(int argc, char *argv[]) {
     }
 
     if ((argc == 3) && (strcmp(argv[1],"server") == 0)) {
-        servidor_inicializar();
+        servidor_t *servidor = servidor_inicializar();
+        servidor_destruir(servidor);
         return 0;
     }
 
