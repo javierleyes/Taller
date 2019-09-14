@@ -6,7 +6,7 @@ void cliente_inicializar() {
 
     char *input = calloc(13, sizeof(char));
     char *comando = calloc(8, sizeof(char));
-    char *comando_compuesto = calloc(3, sizeof(char));
+    char *comando_compuesto = calloc(4, sizeof(char));
 
     do {
         fgets(input, 13, stdin);
@@ -33,7 +33,8 @@ void cliente_inicializar() {
             continue;
         }
 
-        strncpy(comando_compuesto, input, 3);
+//        strncpy(comando_compuesto, input, 3 * sizeof(char));
+        strncpy(comando_compuesto, input, 3 );
 
         if (strcmp(comando_compuesto, "put") == 0) {
 
