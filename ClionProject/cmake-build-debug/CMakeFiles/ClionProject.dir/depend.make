@@ -4,7 +4,12 @@
 CMakeFiles/ClionProject.dir/Cliente.c.o: ../Cliente.c
 CMakeFiles/ClionProject.dir/Cliente.c.o: ../Cliente.h
 
+CMakeFiles/ClionProject.dir/Servidor.c.o: ../Servidor.c
+CMakeFiles/ClionProject.dir/Servidor.c.o: ../Servidor.h
+CMakeFiles/ClionProject.dir/Servidor.c.o: ../tablero.h
+
 CMakeFiles/ClionProject.dir/main.c.o: ../Cliente.h
+CMakeFiles/ClionProject.dir/main.c.o: ../Servidor.h
 CMakeFiles/ClionProject.dir/main.c.o: ../main.c
 CMakeFiles/ClionProject.dir/main.c.o: ../tablero.h
 

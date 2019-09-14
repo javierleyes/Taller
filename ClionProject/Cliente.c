@@ -13,7 +13,7 @@ void cliente_inicializar() {
     do {
         fgets(input, 13, stdin);
 
-        strncpy(comando, input, sizeof(comando));
+        strncpy(comando, input, (7 * sizeof(char)));
 
         if (strcmp(comando, "exit\n") == 0) {
             printf("E");

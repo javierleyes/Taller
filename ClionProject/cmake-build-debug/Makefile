@@ -150,6 +150,33 @@ Cliente.c.s:
 	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Cliente.c.s
 .PHONY : Cliente.c.s
 
+Servidor.o: Servidor.c.o
+
+.PHONY : Servidor.o
+
+# target to build an object file
+Servidor.c.o:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Servidor.c.o
+.PHONY : Servidor.c.o
+
+Servidor.i: Servidor.c.i
+
+.PHONY : Servidor.i
+
+# target to preprocess a source file
+Servidor.c.i:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Servidor.c.i
+.PHONY : Servidor.c.i
+
+Servidor.s: Servidor.c.s
+
+.PHONY : Servidor.s
+
+# target to generate assembly for a file
+Servidor.c.s:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Servidor.c.s
+.PHONY : Servidor.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -216,6 +243,9 @@ help:
 	@echo "... Cliente.o"
 	@echo "... Cliente.i"
 	@echo "... Cliente.s"
+	@echo "... Servidor.o"
+	@echo "... Servidor.i"
+	@echo "... Servidor.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

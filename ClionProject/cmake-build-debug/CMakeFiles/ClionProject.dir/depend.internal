@@ -4,8 +4,13 @@
 CMakeFiles/ClionProject.dir/Cliente.c.o
  /home/javi/repository/Taller/ClionProject/Cliente.c
  /home/javi/repository/Taller/ClionProject/Cliente.h
+CMakeFiles/ClionProject.dir/Servidor.c.o
+ /home/javi/repository/Taller/ClionProject/Servidor.c
+ /home/javi/repository/Taller/ClionProject/Servidor.h
+ /home/javi/repository/Taller/ClionProject/tablero.h
 CMakeFiles/ClionProject.dir/main.c.o
  /home/javi/repository/Taller/ClionProject/Cliente.h
+ /home/javi/repository/Taller/ClionProject/Servidor.h
  /home/javi/repository/Taller/ClionProject/main.c
  /home/javi/repository/Taller/ClionProject/tablero.h
 CMakeFiles/ClionProject.dir/tablero.c.o

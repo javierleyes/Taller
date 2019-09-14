@@ -3,6 +3,7 @@
 
 #include "tablero.h"
 #include "Cliente.h"
+#include "Servidor.h"
 
 //**************************************************************************************************
 //*************************************** FUNCIONES PRIVADAS ***************************************
@@ -31,7 +32,7 @@ static bool validar_modo_operacion(int argc, char *argv[]) {
     }
 
     if ((argc == 3) && (strcmp(argv[1],"server") == 0)) {
-        printf("Modo server \n");
+        servidor_inicializar();
         return 0;
     }
 
@@ -49,7 +50,6 @@ static bool validar_modo_operacion(int argc, char *argv[]) {
 int main (int argc, char *argv[])
 {
     validar_modo_operacion(argc, argv);
-
 
 //    printf("Sudoku \n");
 //
