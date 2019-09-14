@@ -1,14 +1,14 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "tablero.h"
+#include "Cliente.h"
 
 //**************************************************************************************************
 //*************************************** FUNCIONES PRIVADAS ***************************************
 //**************************************************************************************************
 
-bool validar_modo_operacion(int argc, char *argv[]) {
+static bool validar_modo_operacion(int argc, char *argv[]) {
     if (argc == 1) {
         printf("Modo no soportado, el primer parametro debe ser server o client\n");
         return 1;
@@ -36,7 +36,7 @@ bool validar_modo_operacion(int argc, char *argv[]) {
     }
 
     if ((argc == 4) && (strcmp(argv[1],"client") == 0)) {
-        printf("Modo client \n");
+        cliente_inicializar();
         return 0;
     }
 
@@ -48,64 +48,7 @@ bool validar_modo_operacion(int argc, char *argv[]) {
 
 int main (int argc, char *argv[])
 {
-//    return validar_modo_operacion(argc, argv);
-
-
-//  comandos client
-
-    char *input = calloc(13, sizeof(char));
-    char *comando = calloc(7, sizeof(char));
-    char *comando_compuesto = calloc(3, sizeof(char));
-    char *fila = calloc(1, sizeof(char));
-    char *columna = calloc(1, sizeof(char));
-
-    fgets(input, 13, stdin);
-    strncpy(comando, input, sizeof(comando));
-
-    if (strcmp(comando, "verify\n") == 0) {
-        printf("V");
-    }
-
-    if (strcmp(comando, "get\n") == 0) {
-        printf("G");
-    }
-
-    if (strcmp(comando, "reset\n") == 0) {
-        printf("R");
-    }
-
-    if (strcmp(comando, "exit\n") == 0) {
-        printf("E");
-    }
-
-    strncpy(comando_compuesto, input, 3);
-
-    if (strcmp(comando_compuesto, "put") == 0) {
-
-        if ((((input[9] - '0') > 0) && ((input[9] - '0') < 10)) &&
-            (((input[11] - '0') > 0) && ((input[11] - '0') < 10))) {
-//            printf("Indices validos");
-
-            if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
-//                printf("valor valido");
-            } else {
-                printf("Error en el valor ingresado. Rango soportado: [1,9]\n");
-            }
-
-        } else {
-            printf("Error en los indices. Rango soportado: [1,9]\n");
-        }
-    }
-
-    free(input);
-    free(comando);
-    free(comando_compuesto);
-    free(fila);
-    free(columna);
-
-    printf("Modo no soportado, el primer parametro debe ser server o client\n");
-
-
+    validar_modo_operacion(argc, argv);
 
 
 //    printf("Sudoku \n");

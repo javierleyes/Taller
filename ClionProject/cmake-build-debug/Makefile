@@ -123,6 +123,33 @@ ClionProject/fast:
 	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/build
 .PHONY : ClionProject/fast
 
+Cliente.o: Cliente.c.o
+
+.PHONY : Cliente.o
+
+# target to build an object file
+Cliente.c.o:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Cliente.c.o
+.PHONY : Cliente.c.o
+
+Cliente.i: Cliente.c.i
+
+.PHONY : Cliente.i
+
+# target to preprocess a source file
+Cliente.c.i:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Cliente.c.i
+.PHONY : Cliente.c.i
+
+Cliente.s: Cliente.c.s
+
+.PHONY : Cliente.s
+
+# target to generate assembly for a file
+Cliente.c.s:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/Cliente.c.s
+.PHONY : Cliente.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... ClionProject"
 	@echo "... edit_cache"
+	@echo "... Cliente.o"
+	@echo "... Cliente.i"
+	@echo "... Cliente.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

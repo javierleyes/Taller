@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/javi/repository/Taller/ClionProject/Cliente.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/Cliente.c.o"
   "/home/javi/repository/Taller/ClionProject/main.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/main.c.o"
   "/home/javi/repository/Taller/ClionProject/tablero.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/tablero.c.o"
   )

@@ -78,6 +78,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/javi/repository/Taller/ClionProject/Cliente.c">
+			<Option target="ClionProject"/>
+		</Unit>
+		<Unit filename="/home/javi/repository/Taller/ClionProject/Cliente.h">
+			<Option target="ClionProject"/>
+		</Unit>
 		<Unit filename="/home/javi/repository/Taller/ClionProject/main.c">
 			<Option target="ClionProject"/>
 		</Unit>
