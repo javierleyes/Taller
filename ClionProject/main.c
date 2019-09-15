@@ -54,15 +54,12 @@ static bool determinar_modo_operacion(int argc, char **argv) {
 #include <netdb.h>
 #include <errno.h>
 
-#define CANTIDAD_CLIENTES 1
-
 int main (int argc, char *argv[])
 {
 //    determinar_modo_operacion(argc, argv);
 
 
     socket_t *socket = socket_inicializar();
-//    socket_bind_and_listen(socket, 8080, CANTIDAD_CLIENTES);
     socket_bind_and_listen(socket, 8080);
     socket_destruir(socket);
 

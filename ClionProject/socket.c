@@ -1,5 +1,6 @@
 #include "socket.h"
 
+#define CANTIDAD_CLIENTES 1
 #define ERROR 1
 
 struct socket {
@@ -34,7 +35,6 @@ void socket_destruir(socket_t *self) {
 
 // ************************************************** server **************************************************
 
-//int socket_bind_and_listen(socket_t *self, unsigned short service, unsigned short cantidad_clientes) {
 int socket_bind_and_listen(socket_t *self, unsigned short service) {
     struct sockaddr_in direccion;
 
@@ -51,13 +51,13 @@ int socket_bind_and_listen(socket_t *self, unsigned short service) {
         printf("Socket successfully binded..\n");
     }
 
-//    if ((listen(self->socket, cantidad_clientes)) != 0) {
-//        printf("Listen failed...\n");
-//        exit(0);
-//    }
-//    else {
-//        printf("Server listening..\n");
-//    }
+    if ((listen(self->socket, CANTIDAD_CLIENTES)) != 0) {
+        printf("Listen failed...\n");
+        exit(0);
+    }
+    else {
+        printf("Server listening..\n");
+    }
 
     return 0;
 }
