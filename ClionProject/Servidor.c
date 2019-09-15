@@ -19,3 +19,9 @@ void servidor_destruir(servidor_t *self) {
 
     free(self);
 }
+
+//    tablero_t *tablero = tablero_inicializar("board.txt");
+//    tablero_get(tablero);
+//    tablero_put(tablero, 7, 5, 8);
+//    tablero_verify(tablero);
+//    tablero_resetear(tablero);

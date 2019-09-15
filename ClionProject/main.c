@@ -4,12 +4,13 @@
 #include "tablero.h"
 #include "Cliente.h"
 #include "Servidor.h"
+#include "socket.h"
 
 //**************************************************************************************************
 //*************************************** FUNCIONES PRIVADAS ***************************************
 //**************************************************************************************************
 
-static bool validar_modo_operacion(int argc, char *argv[]) {
+static bool determinar_modo_operacion(int argc, char **argv) {
     if (argc == 1) {
         printf("Modo no soportado, el primer parametro debe ser server o client\n");
         return 1;
@@ -48,27 +49,88 @@ static bool validar_modo_operacion(int argc, char *argv[]) {
 
 //**************************************************************************************************
 
+#include <sys/socket.h> // socket()
+#include <unistd.h> // close()
+#include <netdb.h>
+#include <errno.h>
+
+#define CANTIDAD_CLIENTES 1
+
 int main (int argc, char *argv[])
 {
-    validar_modo_operacion(argc, argv);
+//    determinar_modo_operacion(argc, argv);
 
-//    printf("Sudoku \n");
+
+    socket_t *socket = socket_inicializar();
+//    socket_bind_and_listen(socket, 8080, CANTIDAD_CLIENTES);
+    socket_bind_and_listen(socket, 8080);
+    socket_destruir(socket);
+
+
+
+
+
+
+//    int socketFd = -1;
 //
-//    tablero_t *tablero = tablero_inicializar("board.txt");
+//    const char* hostname = "fi.uba.ar";
+//    const char* servicename = "http";
 //
-//    tablero_get(tablero);
+//    // Utilizamos hints para "filtrar" las direcciones que me interesan
+//    struct addrinfo hints;
+//    // ai_list será la lista de address info, ptr mi iterados
+//    struct addrinfo *ai_list, *ptr;
 //
-//    tablero_verify(tablero);
+//    // Limpio hints
+//    memset(&hints, 0, sizeof(struct addrinfo));
+//    hints.ai_family = AF_INET;       /* IPv4 (or AF_INET6 for IPv6)     */
+//    hints.ai_socktype = SOCK_STREAM; /* TCP  (or SOCK_DGRAM for UDP)    */
+//    hints.ai_flags = 0;              /* None (or AI_PASSIVE for server) */
 //
-//    tablero_put(tablero, 7, 5, 8);
+//    // El servicio se obtiene consultando el archivo /etc/service
+//    int s = getaddrinfo(hostname, servicename, &hints, &ai_list);
 //
-//    tablero_verify(tablero);
+//    // chequeo error
+//    if (s != 0) {
+//        printf("Error in getaddrinfo: %s\n", gai_strerror(s));
+//        return 1;
+//    }
 //
-//    tablero_resetear(tablero);
+//    // Ahora conectamos el socket
+//    bool are_we_connected = false;
+//    for (ptr = ai_list; ptr != NULL && are_we_connected == false; ptr = ptr->ai_next) {
 //
-//    tablero_get(tablero);
+//        // creo el socket
+//        socketFd = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
 //
-//    tablero_exit(tablero);
+//        if (socketFd == -1) {
+//            printf("socket creation failed...\n");
+//            exit(0);
+//        } else {
+//            printf("Socket successfully created..\n");
+//        }
+//
+//        // conectamos el socket
+//        int res = connect(socketFd, ptr->ai_addr, ptr->ai_addrlen);
+//        if (res == -1) {
+//            printf("Error: %s\n", strerror(errno));
+//            close(socketFd);
+//        }
+//
+//        are_we_connected = (s != -1); // nos conectamos?
+//    }
+//
+//    freeaddrinfo(ai_list);
+//
+//    if (are_we_connected == false) {
+//        return 1; // nos quedamos sin direcciones validas y no nos pudimos conectar :(
+//    }
+//
+//    // mensaje
+//
+//    close(socketFd);
+//
+////    tablero_exit(tablero);
 
     return 0;
 }

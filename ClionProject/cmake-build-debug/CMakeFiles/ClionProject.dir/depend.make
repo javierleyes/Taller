@@ -11,7 +11,11 @@ CMakeFiles/ClionProject.dir/Servidor.c.o: ../tablero.h
 CMakeFiles/ClionProject.dir/main.c.o: ../Cliente.h
 CMakeFiles/ClionProject.dir/main.c.o: ../Servidor.h
 CMakeFiles/ClionProject.dir/main.c.o: ../main.c
+CMakeFiles/ClionProject.dir/main.c.o: ../socket.h
 CMakeFiles/ClionProject.dir/main.c.o: ../tablero.h
+
+CMakeFiles/ClionProject.dir/socket.c.o: ../socket.c
+CMakeFiles/ClionProject.dir/socket.c.o: ../socket.h
 
 CMakeFiles/ClionProject.dir/tablero.c.o: ../tablero.c
 CMakeFiles/ClionProject.dir/tablero.c.o: ../tablero.h

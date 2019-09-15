@@ -93,6 +93,12 @@
 		<Unit filename="/home/javi/repository/Taller/ClionProject/main.c">
 			<Option target="ClionProject"/>
 		</Unit>
+		<Unit filename="/home/javi/repository/Taller/ClionProject/socket.c">
+			<Option target="ClionProject"/>
+		</Unit>
+		<Unit filename="/home/javi/repository/Taller/ClionProject/socket.h">
+			<Option target="ClionProject"/>
+		</Unit>
 		<Unit filename="/home/javi/repository/Taller/ClionProject/tablero.c">
 			<Option target="ClionProject"/>
 		</Unit>
