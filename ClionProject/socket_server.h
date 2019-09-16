@@ -23,7 +23,7 @@ socket_server_t *socket_aceptar(socket_server_t * self);
 
 //int socket_recibir(socket_t *self, const void *buffer, size_t longitud);
 
-//void socket_shutdown(socket_t *self);
+void socket_shutdown(socket_server_t *self);
 
 void socket_server_destruir(socket_server_t *self);
 

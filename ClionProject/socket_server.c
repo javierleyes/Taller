@@ -8,18 +8,13 @@ struct socket_server {
 };
 
 socket_server_t *socket_server_inicializar() {
-    socket_server_t *socket_server = calloc(1, sizeof(socket_server_t));
-
-    if (!socket_server) {
-        return NULL;
-    }
+    socket_server_t *socket_server = calloc(1, sizeof(socket_server));
 
     socket_server->aceptador = socket(AF_INET, SOCK_STREAM, 0);
     socket_server->activo = 0;
 
     if (socket_server->aceptador == -1) {
         printf("socket creation failed...\n");
-
         socket_server_destruir(socket_server);
         return NULL;
 
@@ -66,12 +61,14 @@ socket_server_t *socket_aceptar(socket_server_t *self) {
     return self;
 }
 
-void socket_server_destruir(socket_server_t *self) {
+void socket_shutdown(socket_server_t *self) {
+    shutdown(self->aceptador, SHUT_RDWR);
     close(self->aceptador);
 
-    if (self->activo != 0) {
-        close(self->activo);
-    }
+    shutdown(self->activo, SHUT_RDWR);
+    close(self->activo);
+}
 
+void socket_server_destruir(socket_server_t *self) {
     free(self);
 }

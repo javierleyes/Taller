@@ -121,7 +121,6 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
     while ((valor_inicial = fgetc(handler_tablero_inicial)) != EOF) {
 
         if ( (valor_inicial != ' ') && (valor_inicial != '\n') ) {
-//            putchar(valor_inicial);
 
             tablero->valores_iniciales[posicion_tablero].modificable = (valor_inicial == '0') ? true : false;
             tablero->valores_iniciales[posicion_tablero].valor = (valor_inicial - '0');

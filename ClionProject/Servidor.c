@@ -31,14 +31,13 @@ servidor_t *servidor_inicializar(unsigned short service) {
     return servidor;
 }
 
+void servidor_escuchar(servidor_t *self) {
+
+}
+
 void servidor_destruir(servidor_t *self) {
     tablero_destruir(self->tablero);
     socket_server_destruir(self->socket);
     free(self);
 }
 
-//    tablero_t *tablero = tablero_inicializar("board.txt");
-//    tablero_get(tablero);
-//    tablero_put(tablero, 7, 5, 8);
-//    tablero_verify(tablero);
-//    tablero_resetear(tablero);
