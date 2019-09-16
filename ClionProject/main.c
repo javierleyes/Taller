@@ -4,11 +4,15 @@
 #include "tablero.h"
 #include "Cliente.h"
 #include "Servidor.h"
-#include "socket.h"
 
 //**************************************************************************************************
 //*************************************** FUNCIONES PRIVADAS ***************************************
 //**************************************************************************************************
+
+//static void modo_servidor(int *service) {
+//    servidor_t *servidor = servidor_inicializar(service);
+//    servidor_destruir(servidor);
+//}
 
 static bool determinar_modo_operacion(int argc, char **argv) {
     if (argc == 1) {
@@ -18,12 +22,12 @@ static bool determinar_modo_operacion(int argc, char **argv) {
 
     if (argc == 2) {
 
-        if (strcmp(argv[1],"server") == 0) {
+        if (strcmp(argv[1], "server") == 0) {
             printf("Uso: ./tp server <puerto>\n");
             return 1;
         }
 
-        if (strcmp(argv[1],"client") == 0) {
+        if (strcmp(argv[1], "client") == 0) {
             printf("Uso: ./tp client <host> <puerto>\n");
             return 1;
         }
@@ -32,13 +36,14 @@ static bool determinar_modo_operacion(int argc, char **argv) {
         return 1;
     }
 
-    if ((argc == 3) && (strcmp(argv[1],"server") == 0)) {
-        servidor_t *servidor = servidor_inicializar();
-        servidor_destruir(servidor);
+    if ((argc == 3) && (strcmp(argv[1], "server") == 0)) {
+//        servidor_t *server = servidor_inicializar(argv[2]);
+        servidor_t *server = servidor_inicializar(strtoul(argv[2], NULL, 0));
+        servidor_destruir(server);
         return 0;
     }
 
-    if ((argc == 4) && (strcmp(argv[1],"client") == 0)) {
+    if ((argc == 4) && (strcmp(argv[1], "client") == 0)) {
         cliente_inicializar();
         return 0;
     }
@@ -49,23 +54,8 @@ static bool determinar_modo_operacion(int argc, char **argv) {
 
 //**************************************************************************************************
 
-#include <sys/socket.h> // socket()
-#include <unistd.h> // close()
-#include <netdb.h>
-#include <errno.h>
-
-int main (int argc, char *argv[])
-{
-//    determinar_modo_operacion(argc, argv);
-
-
-    socket_t *socket = socket_inicializar();
-    socket_bind_and_listen(socket, 8080);
-    socket_destruir(socket);
-
-
-
-
+int main(int argc, char *argv[]) {
+    determinar_modo_operacion(argc, argv);
 
 
 //    int socketFd = -1;
@@ -127,7 +117,7 @@ int main (int argc, char *argv[])
 //
 //    close(socketFd);
 //
-////    tablero_exit(tablero);
+//    tablero_exit(tablero);
 
     return 0;
 }

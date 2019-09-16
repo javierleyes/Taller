@@ -1,6 +1,11 @@
 #include "socket.h"
 
-#define CANTIDAD_CLIENTES 1
+//hacer socket server y client
+//struct socket_server {
+//    int aceptador;
+//    int activo
+//};
+
 #define ERROR 1
 
 struct socket {
@@ -22,43 +27,52 @@ socket_t *socket_inicializar() {
         socket_destruir(socketP);
 
         return NULL;
-    }
-    else
+    } else
         printf("Socket successfully created..\n");
 
     return socketP;
 }
 
 void socket_destruir(socket_t *self) {
+    close(self->socket);
     free(self);
 }
 
 // ************************************************** server **************************************************
 
-int socket_bind_and_listen(socket_t *self, unsigned short service) {
+int socket_bind_and_listen(socket_t *self, unsigned short service, unsigned short cantidad_clientes) {
     struct sockaddr_in direccion;
 
     direccion.sin_family = AF_INET;
     direccion.sin_addr.s_addr = htonl(INADDR_ANY);
     direccion.sin_port = htons(service);
 
-    if ((bind(self->socket, (struct sockaddr_in*) &direccion, sizeof(direccion))) != 0) {
+    if ((bind(self->socket, (const struct sockaddr *) &direccion, sizeof(direccion))) != 0) {
         printf("socket bind failed...\n");
         return ERROR;
-    }
-    else
-    {
+    } else {
         printf("Socket successfully binded..\n");
     }
 
-    if ((listen(self->socket, CANTIDAD_CLIENTES)) != 0) {
+    if ((listen(self->socket, cantidad_clientes)) != 0) {
         printf("Listen failed...\n");
-        exit(0);
-    }
-    else {
+        return ERROR;
+    } else {
         printf("Server listening..\n");
     }
 
     return 0;
+}
+
+socket_t *socket_aceptar(socket_t *self) {
+    self->socket = accept(self->socket, NULL, NULL);
+
+    if (self->socket < 0) {
+        printf("server acccept failed...\n");
+        return NULL;
+    }
+
+    printf("server acccept the client...\n");
+    return self;
 }
 
