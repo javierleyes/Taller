@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/javi/repository/Taller/ClionProject/Cliente.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/Cliente.c.o"
   "/home/javi/repository/Taller/ClionProject/Servidor.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/Servidor.c.o"
   "/home/javi/repository/Taller/ClionProject/main.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/main.c.o"
-  "/home/javi/repository/Taller/ClionProject/socket_server.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/socket_server.c.o"
+  "/home/javi/repository/Taller/ClionProject/socket.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/socket.c.o"
   "/home/javi/repository/Taller/ClionProject/tablero.c" "/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles/ClionProject.dir/tablero.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

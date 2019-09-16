@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/ClionProject.dir/main.c.o CMakeFiles/ClionProject.dir/tablero.c.o CMakeFiles/ClionProject.dir/Cliente.c.o CMakeFiles/ClionProject.dir/Servidor.c.o CMakeFiles/ClionProject.dir/socket_server.c.o  -o ClionProject 
+/usr/bin/cc -g   CMakeFiles/ClionProject.dir/main.c.o CMakeFiles/ClionProject.dir/tablero.c.o CMakeFiles/ClionProject.dir/Cliente.c.o CMakeFiles/ClionProject.dir/Servidor.c.o CMakeFiles/ClionProject.dir/socket.c.o  -o ClionProject 

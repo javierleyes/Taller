@@ -3,7 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/ClionProject.dir/tablero.c.o"
   "CMakeFiles/ClionProject.dir/Cliente.c.o"
   "CMakeFiles/ClionProject.dir/Servidor.c.o"
-  "CMakeFiles/ClionProject.dir/socket_server.c.o"
+  "CMakeFiles/ClionProject.dir/socket.c.o"
   "ClionProject.pdb"
   "ClionProject"
 )

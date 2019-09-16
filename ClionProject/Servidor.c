@@ -1,14 +1,14 @@
 #include "tablero.h"
 
 #include "Servidor.h"
-#include "socket_server.h"
+#include "socket.h"
 
 #define CANTIDAD_CLIENTES 1
 #define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 
 struct servidor {
     tablero_t *tablero;
-    socket_server_t *socket;
+    socket_t *socket;
 };
 
 servidor_t *servidor_inicializar(unsigned short service) {
@@ -20,7 +20,7 @@ servidor_t *servidor_inicializar(unsigned short service) {
         return NULL;
     }
 
-    servidor->socket = socket_server_inicializar();
+    servidor->socket = socket_inicializar();
 
     if (servidor->socket == NULL) {
         return NULL;
@@ -37,7 +37,7 @@ void servidor_escuchar(servidor_t *self) {
 
 void servidor_destruir(servidor_t *self) {
     tablero_destruir(self->tablero);
-    socket_server_destruir(self->socket);
+    socket_destruir(self->socket);
     free(self);
 }
 
