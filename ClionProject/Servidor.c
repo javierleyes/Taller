@@ -11,7 +11,7 @@ struct servidor {
     socket_t *socket;
 };
 
-servidor_t *servidor_inicializar(unsigned short service) {
+servidor_t *servidor_inicializar(char *service) {
     servidor_t *servidor = calloc(1, sizeof(servidor_t));
 
     servidor->tablero = tablero_inicializar(NOMBRE_ARCHIVO_SUDOKU);

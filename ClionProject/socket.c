@@ -23,26 +23,64 @@ socket_t *socket_inicializar() {
     return socket_server;
 }
 
-int socket_bind_and_listen(socket_t *self, unsigned short service, unsigned short cantidad_clientes) {
-    struct sockaddr_in direccion;
+int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
+    int status = 0;
 
-    direccion.sin_family = AF_INET;
-    direccion.sin_addr.s_addr = htonl(INADDR_ANY);
-    direccion.sin_port = htons(service);
+    struct addrinfo hints;
+    struct addrinfo *ptr;
 
-    if ((bind(self->socket_tcp, (const struct sockaddr *) &direccion, sizeof(direccion))) != 0) {
-        printf("socket bind failed...\n");
-        return ERROR;
-    } else {
-        printf("Socket successfully binded..\n");
+    int val;
+
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+
+    status = getaddrinfo(NULL, (const char *) service, &hints, &ptr);
+
+    if (status != 0) {
+        printf("Error in getaddrinfo: %s\n", gai_strerror(status));
+        return 1;
     }
 
-    if ((listen(self->socket_tcp, cantidad_clientes)) != 0) {
-        printf("Listen failed...\n");
+    if (self->socket_tcp == -1) {
+        printf("Error: %s\n", strerror(errno));
+        freeaddrinfo(ptr);
         return ERROR;
-    } else {
-        printf("Server listening..\n");
     }
+
+    // TIME_WAIT
+    val = 1;
+    status = setsockopt(self->socket_tcp, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+    if (status == -1) {
+        printf("Error: %s\n", strerror(errno));
+        close(self->socket_tcp);
+        freeaddrinfo(ptr);
+        return ERROR;
+    }
+
+    // BIND
+    status = bind(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
+    if (status == -1) {
+        printf("Error: %s\n", strerror(errno));
+        close(self->socket_tcp);
+        freeaddrinfo(ptr);
+        return ERROR;
+    }
+
+    freeaddrinfo(ptr);
+
+    printf("Socket successfully binded..\n");
+
+    // LISTEN
+    status = listen(self->socket_tcp, cantidad_clientes);
+    if (status == -1) {
+        printf("Error: %s\n", strerror(errno));
+        close(self->socket_tcp);
+        return ERROR;
+    }
+
+    printf("Server listening..\n");
 
     return 0;
 }

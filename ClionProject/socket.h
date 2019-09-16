@@ -25,7 +25,7 @@ void socket_destruir(socket_t *self);
 
 // ************************************************** server **************************************************
 
-int socket_bind_and_listen(socket_t *self, unsigned short service, unsigned short cantidad_clientes);
+int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes);
 
 socket_t *socket_aceptar(socket_t * self);
 
