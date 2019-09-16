@@ -204,32 +204,32 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/main.c.s
 .PHONY : main.c.s
 
-socket.o: socket.c.o
+socket_server.o: socket_server.c.o
 
-.PHONY : socket.o
+.PHONY : socket_server.o
 
 # target to build an object file
-socket.c.o:
-	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/socket.c.o
-.PHONY : socket.c.o
+socket_server.c.o:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/socket_server.c.o
+.PHONY : socket_server.c.o
 
-socket.i: socket.c.i
+socket_server.i: socket_server.c.i
 
-.PHONY : socket.i
+.PHONY : socket_server.i
 
 # target to preprocess a source file
-socket.c.i:
-	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/socket.c.i
-.PHONY : socket.c.i
+socket_server.c.i:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/socket_server.c.i
+.PHONY : socket_server.c.i
 
-socket.s: socket.c.s
+socket_server.s: socket_server.c.s
 
-.PHONY : socket.s
+.PHONY : socket_server.s
 
 # target to generate assembly for a file
-socket.c.s:
-	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/socket.c.s
-.PHONY : socket.c.s
+socket_server.c.s:
+	$(MAKE) -f CMakeFiles/ClionProject.dir/build.make CMakeFiles/ClionProject.dir/socket_server.c.s
+.PHONY : socket_server.c.s
 
 tablero.o: tablero.c.o
 
@@ -276,9 +276,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... socket.o"
-	@echo "... socket.i"
-	@echo "... socket.s"
+	@echo "... socket_server.o"
+	@echo "... socket_server.i"
+	@echo "... socket_server.s"
 	@echo "... tablero.o"
 	@echo "... tablero.i"
 	@echo "... tablero.s"

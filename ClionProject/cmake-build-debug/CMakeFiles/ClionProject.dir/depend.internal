@@ -7,16 +7,16 @@ CMakeFiles/ClionProject.dir/Cliente.c.o
 CMakeFiles/ClionProject.dir/Servidor.c.o
  /home/javi/repository/Taller/ClionProject/Servidor.c
  /home/javi/repository/Taller/ClionProject/Servidor.h
- /home/javi/repository/Taller/ClionProject/socket.h
+ /home/javi/repository/Taller/ClionProject/socket_server.h
  /home/javi/repository/Taller/ClionProject/tablero.h
 CMakeFiles/ClionProject.dir/main.c.o
  /home/javi/repository/Taller/ClionProject/Cliente.h
  /home/javi/repository/Taller/ClionProject/Servidor.h
  /home/javi/repository/Taller/ClionProject/main.c
  /home/javi/repository/Taller/ClionProject/tablero.h
-CMakeFiles/ClionProject.dir/socket.c.o
- /home/javi/repository/Taller/ClionProject/socket.c
- /home/javi/repository/Taller/ClionProject/socket.h
+CMakeFiles/ClionProject.dir/socket_server.c.o
+ /home/javi/repository/Taller/ClionProject/socket_server.c
+ /home/javi/repository/Taller/ClionProject/socket_server.h
 CMakeFiles/ClionProject.dir/tablero.c.o
  /home/javi/repository/Taller/ClionProject/tablero.c
  /home/javi/repository/Taller/ClionProject/tablero.h

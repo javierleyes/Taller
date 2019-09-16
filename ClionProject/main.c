@@ -5,14 +5,12 @@
 #include "Cliente.h"
 #include "Servidor.h"
 
+#define MODO_SERVER "server"
+#define MODO_CLIENT "client"
+
 //**************************************************************************************************
 //*************************************** FUNCIONES PRIVADAS ***************************************
 //**************************************************************************************************
-
-//static void modo_servidor(int *service) {
-//    servidor_t *servidor = servidor_inicializar(service);
-//    servidor_destruir(servidor);
-//}
 
 static bool determinar_modo_operacion(int argc, char **argv) {
     if (argc == 1) {
@@ -36,14 +34,13 @@ static bool determinar_modo_operacion(int argc, char **argv) {
         return 1;
     }
 
-    if ((argc == 3) && (strcmp(argv[1], "server") == 0)) {
-//        servidor_t *server = servidor_inicializar(argv[2]);
+    if ((argc == 3) && (strcmp(argv[1], MODO_SERVER) == 0)) {
         servidor_t *server = servidor_inicializar(strtoul(argv[2], NULL, 0));
         servidor_destruir(server);
         return 0;
     }
 
-    if ((argc == 4) && (strcmp(argv[1], "client") == 0)) {
+    if ((argc == 4) && (strcmp(argv[1], MODO_CLIENT) == 0)) {
         cliente_inicializar();
         return 0;
     }

@@ -109,18 +109,18 @@ CMakeFiles/ClionProject.dir/Servidor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ClionProject.dir/Servidor.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/javi/repository/Taller/ClionProject/Servidor.c -o CMakeFiles/ClionProject.dir/Servidor.c.s
 
-CMakeFiles/ClionProject.dir/socket.c.o: CMakeFiles/ClionProject.dir/flags.make
-CMakeFiles/ClionProject.dir/socket.c.o: ../socket.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/ClionProject.dir/socket.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/ClionProject.dir/socket.c.o   -c /home/javi/repository/Taller/ClionProject/socket.c
+CMakeFiles/ClionProject.dir/socket_server.c.o: CMakeFiles/ClionProject.dir/flags.make
+CMakeFiles/ClionProject.dir/socket_server.c.o: ../socket_server.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/ClionProject.dir/socket_server.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/ClionProject.dir/socket_server.c.o   -c /home/javi/repository/Taller/ClionProject/socket_server.c
 
-CMakeFiles/ClionProject.dir/socket.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ClionProject.dir/socket.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/javi/repository/Taller/ClionProject/socket.c > CMakeFiles/ClionProject.dir/socket.c.i
+CMakeFiles/ClionProject.dir/socket_server.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ClionProject.dir/socket_server.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/javi/repository/Taller/ClionProject/socket_server.c > CMakeFiles/ClionProject.dir/socket_server.c.i
 
-CMakeFiles/ClionProject.dir/socket.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ClionProject.dir/socket.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/javi/repository/Taller/ClionProject/socket.c -o CMakeFiles/ClionProject.dir/socket.c.s
+CMakeFiles/ClionProject.dir/socket_server.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ClionProject.dir/socket_server.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/javi/repository/Taller/ClionProject/socket_server.c -o CMakeFiles/ClionProject.dir/socket_server.c.s
 
 # Object files for target ClionProject
 ClionProject_OBJECTS = \
@@ -128,7 +128,7 @@ ClionProject_OBJECTS = \
 "CMakeFiles/ClionProject.dir/tablero.c.o" \
 "CMakeFiles/ClionProject.dir/Cliente.c.o" \
 "CMakeFiles/ClionProject.dir/Servidor.c.o" \
-"CMakeFiles/ClionProject.dir/socket.c.o"
+"CMakeFiles/ClionProject.dir/socket_server.c.o"
 
 # External object files for target ClionProject
 ClionProject_EXTERNAL_OBJECTS =
@@ -137,7 +137,7 @@ ClionProject: CMakeFiles/ClionProject.dir/main.c.o
 ClionProject: CMakeFiles/ClionProject.dir/tablero.c.o
 ClionProject: CMakeFiles/ClionProject.dir/Cliente.c.o
 ClionProject: CMakeFiles/ClionProject.dir/Servidor.c.o
-ClionProject: CMakeFiles/ClionProject.dir/socket.c.o
+ClionProject: CMakeFiles/ClionProject.dir/socket_server.c.o
 ClionProject: CMakeFiles/ClionProject.dir/build.make
 ClionProject: CMakeFiles/ClionProject.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/javi/repository/Taller/ClionProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable ClionProject"
