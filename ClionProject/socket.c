@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200112L
+
 #include "socket.h"
 
 #define ERROR 1
@@ -25,10 +27,8 @@ socket_t *socket_inicializar() {
 
 int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
     int status = 0;
-
     struct addrinfo hints;
     struct addrinfo *ptr;
-
     int val;
 
     memset(&hints, 0, sizeof(struct addrinfo));
@@ -37,10 +37,8 @@ int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantida
     hints.ai_flags = AI_PASSIVE;
 
     status = getaddrinfo(NULL, (const char *) service, &hints, &ptr);
-
     if (status != 0) {
-        printf("Error in getaddrinfo: %s\n", gai_strerror(status));
-        return 1;
+        return ERROR;
     }
 
     if (self->socket_tcp == -1) {
