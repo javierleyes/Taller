@@ -1,4 +1,0 @@
-/home/javi/Downloads/CLion-2019.2.1/clion-2019.2.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/javi/repository/Taller/TP1/Code
--- Configuring done
--- Generating done
--- Build files have been written to: /home/javi/repository/Taller/TP1/Code/cmake-build-debug

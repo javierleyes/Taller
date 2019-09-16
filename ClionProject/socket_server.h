@@ -15,6 +15,10 @@ typedef struct socket_server socket_server_t;
 
 socket_server_t *socket_server_inicializar();
 
+int socket_bind_and_listen(socket_server_t *self, unsigned short service, unsigned short cantidad_clientes);
+
+socket_server_t *socket_aceptar(socket_server_t * self);
+
 //int socket_enviar(socket_t *self, const void *buffer, size_t longitud);
 
 //int socket_recibir(socket_t *self, const void *buffer, size_t longitud);
@@ -22,12 +26,6 @@ socket_server_t *socket_server_inicializar();
 //void socket_shutdown(socket_t *self);
 
 void socket_server_destruir(socket_server_t *self);
-
-// ************************************************** server **************************************************
-
-int socket_bind_and_listen(socket_server_t *self, unsigned short service, unsigned short cantidad_clientes);
-
-socket_server_t *socket_aceptar(socket_server_t * self);
 
 #endif //SOCKET_SERVER_H
 
