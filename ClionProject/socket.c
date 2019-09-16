@@ -3,15 +3,15 @@
 #define ERROR 1
 
 struct socket {
-    int aceptador;
+    int socket_tcp;
 };
 
 socket_t *socket_inicializar() {
     socket_t *socket_server = calloc(1, sizeof(socket_server));
 
-    socket_server->aceptador = socket(AF_INET, SOCK_STREAM, 0);
+    socket_server->socket_tcp = socket(AF_INET, SOCK_STREAM, 0);
 
-    if (socket_server->aceptador == -1) {
+    if (socket_server->socket_tcp == -1) {
         printf("socket creation failed...\n");
         socket_destruir(socket_server);
         return NULL;
@@ -30,14 +30,14 @@ int socket_bind_and_listen(socket_t *self, unsigned short service, unsigned shor
     direccion.sin_addr.s_addr = htonl(INADDR_ANY);
     direccion.sin_port = htons(service);
 
-    if ((bind(self->aceptador, (const struct sockaddr *) &direccion, sizeof(direccion))) != 0) {
+    if ((bind(self->socket_tcp, (const struct sockaddr *) &direccion, sizeof(direccion))) != 0) {
         printf("socket bind failed...\n");
         return ERROR;
     } else {
         printf("Socket successfully binded..\n");
     }
 
-    if ((listen(self->aceptador, cantidad_clientes)) != 0) {
+    if ((listen(self->socket_tcp, cantidad_clientes)) != 0) {
         printf("Listen failed...\n");
         return ERROR;
     } else {
@@ -48,7 +48,7 @@ int socket_bind_and_listen(socket_t *self, unsigned short service, unsigned shor
 }
 
 socket_t *socket_aceptar(socket_t *self) {
-    int socket_activo = accept(self->aceptador, NULL, NULL);
+    int socket_activo = accept(self->socket_tcp, NULL, NULL);
 
     if (socket_activo < 0) {
         printf("server acccept failed...\n");
@@ -60,8 +60,8 @@ socket_t *socket_aceptar(socket_t *self) {
 }
 
 void socket_shutdown(socket_t *self) {
-    shutdown(self->aceptador, SHUT_RDWR);
-    close(self->aceptador);
+    shutdown(self->socket_tcp, SHUT_RDWR);
+    close(self->socket_tcp);
 }
 
 void socket_destruir(socket_t *self) {
