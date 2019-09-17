@@ -32,12 +32,41 @@ servidor_t *servidor_inicializar(char *service) {
 }
 
 void servidor_escuchar(servidor_t *self) {
+    bool continuar_escuchando = true;
+    socket_t *socket_activo;
 
+    while (continuar_escuchando) {
+        socket_activo = socket_aceptar(self->socket);
+
+        if (socket_activo == NULL) {
+            printf("Error: %s\n", strerror(errno));
+            continuar_escuchando = false;
+        } else {
+            printf("New client\n");
+//            memset(small_buf, 0, MAX_SMALL_BUF_LEN);
+//            conexion_valida = socket_recibir(socket_activo, small_buf, MAX_SMALL_BUF_LEN - 1);
+
+//            len = atoi(small_buf);
+//            printf("Echo %i bytes\n", len);
+
+//            if (len == 0) {
+//                printf("Zero bytes. Bye!\n");
+//                continuar_escuchando = false;
+//            } else {
+//                printf("Received %i/%i bytes\n", socket_recibir(socket_activo, tmp, len), len);
+//                printf("Sent %i/%i bytes\n\n", socket_enviar(socket_activo, tmp, len), len);
+//            }
+        }
+
+        socket_shutdown(socket_activo);
+    }
+
+    socket_shutdown(self->socket);
 }
 
 void servidor_destruir(servidor_t *self) {
-    tablero_destruir(self->tablero);
     socket_destruir(self->socket);
+    tablero_destruir(self->tablero);
     free(self);
 }
 

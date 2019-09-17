@@ -25,6 +25,52 @@ socket_t *socket_inicializar() {
     return socket_server;
 }
 
+int socket_enviar(socket_t *self, char *buffer, size_t longitud) {
+    int bytes_enviados = 0;
+    int bytes = 0;
+    bool socket_valido = true;
+
+    while (bytes_enviados < longitud && socket_valido) {
+        bytes = send(self->socket_tcp, &buffer[bytes_enviados], longitud - bytes_enviados, MSG_NOSIGNAL);
+
+        if (bytes <= 0) {
+            socket_valido = false;
+        } else {
+            bytes_enviados += bytes;
+        }
+    }
+
+    if (socket_valido) {
+        return bytes_enviados;
+    }
+
+    return -1;
+}
+
+int socket_recibir(socket_t *self, char *buffer, size_t longitud) {
+    int bytes_recibidos = 0;
+    int bytes = 0;
+    bool socket_valido = true;
+
+    while (bytes_recibidos < longitud && socket_valido) {
+        bytes = recv(self->socket_tcp, &buffer[bytes_recibidos], longitud - bytes_recibidos, MSG_NOSIGNAL);
+
+        if (bytes <= 0) {
+            socket_valido = false;
+        } else {
+            bytes_recibidos += bytes;
+        }
+    }
+
+    if (socket_valido) {
+        return bytes_recibidos;
+    }
+
+    return -1;
+}
+
+// ************************************************** server **************************************************
+
 int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
     int status = 0;
     struct addrinfo hints;
@@ -84,22 +130,25 @@ int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantida
 }
 
 socket_t *socket_aceptar(socket_t *self) {
-    int socket_activo = accept(self->socket_tcp, NULL, NULL);
+    socket_t *socket = calloc(1, sizeof(socket_t));
 
-    if (socket_activo < 0) {
+    socket->socket_tcp = accept(self->socket_tcp, NULL, NULL);
+
+    if (socket->socket_tcp < 0) {
         printf("server acccept failed...\n");
+        free(socket);
         return NULL;
     }
 
     printf("server acccept the client...\n");
-    return self;
+    return socket;
 }
 
 void socket_shutdown(socket_t *self) {
-    shutdown(self->socket_tcp, SHUT_RDWR);
-    close(self->socket_tcp);
+
 }
 
 void socket_destruir(socket_t *self) {
+    close(self->socket_tcp);
     free(self);
 }
