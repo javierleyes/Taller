@@ -80,26 +80,29 @@ void socket_destruir(socket_t *self) {
 
 // ************************************************** server **************************************************
 
-int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
+bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
     int status = 0;
     struct addrinfo hints;
+    struct addrinfo *result;
     struct addrinfo *ptr;
     int val;
+    bool esta_asignado_escuchado = false;
 
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    status = getaddrinfo(NULL, (const char *) service, &hints, &ptr);
+    status = getaddrinfo(NULL, (const char *) service, &hints, &result);
+
     if (status != 0) {
-        return ERROR;
+        return false;
     }
 
     if (self->socket_tcp == -1) {
         printf("Error: %s\n", strerror(errno));
-        freeaddrinfo(ptr);
-        return ERROR;
+        freeaddrinfo(result);
+        return false;
     }
 
     // TIME_WAIT
@@ -108,17 +111,20 @@ int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantida
     if (status == -1) {
         printf("Error: %s\n", strerror(errno));
         close(self->socket_tcp);
-        freeaddrinfo(ptr);
-        return ERROR;
+        freeaddrinfo(result);
+        return false;
     }
 
     // BIND
-    status = bind(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
-    if (status == -1) {
-        printf("Error: %s\n", strerror(errno));
-        close(self->socket_tcp);
-        freeaddrinfo(ptr);
-        return ERROR;
+    for (ptr = result; ptr != NULL && esta_asignado_escuchado == false; ptr = ptr->ai_next) {
+
+        status = bind(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
+
+        if (status != -1) {
+            esta_asignado_escuchado = true;
+        } else {
+            printf("Error: %s\n", strerror(errno));
+        }
     }
 
     freeaddrinfo(ptr);
@@ -129,13 +135,12 @@ int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantida
     status = listen(self->socket_tcp, cantidad_clientes);
     if (status == -1) {
         printf("Error: %s\n", strerror(errno));
-        close(self->socket_tcp);
-        return ERROR;
+        return false;
     }
 
     printf("Server listening..\n");
 
-    return 0;
+    return true;
 }
 
 socket_t *socket_aceptar(socket_t *self) {
@@ -155,8 +160,39 @@ socket_t *socket_aceptar(socket_t *self) {
 
 // ************************************************** client **************************************************
 
-//int socket_conectar(socket_t *self, const char *host, const char *service) {
-//
-//}
-//
+bool socket_conectar(socket_t *self, const char *host, const char *service) {
+    bool esta_conectado = false;
+    int status = 0;
+
+    struct addrinfo hints;
+    struct addrinfo *result;
+    struct addrinfo *ptr;
+
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = 0;
+
+    status = getaddrinfo(host, service, &hints, &result);
+
+    if (status != 0) {
+        printf("Error in getaddrinfo: %s\n", gai_strerror(status));
+        return 1;
+    }
+
+    for (ptr = result; ptr != NULL && esta_conectado == false; ptr = ptr->ai_next) {
+
+        status = connect(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
+
+        if (status != -1) {
+            esta_conectado = true;
+        } else {
+            printf("Error: %s\n", strerror(errno));
+        }
+    }
+
+    freeaddrinfo(result);
+
+    return esta_conectado;
+}
 

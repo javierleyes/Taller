@@ -25,12 +25,12 @@ void socket_destruir(socket_t *self);
 
 // ************************************************** server **************************************************
 
-int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes);
+bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes);
 
 socket_t *socket_aceptar(socket_t * self);
 
 // ************************************************** client **************************************************
 
-//int socket_conectar(socket_t *self, const char *host, const char *service);
+bool socket_conectar(socket_t *self, const char *host, const char *service);
 
 #endif //SOCKET_SERVER_H
