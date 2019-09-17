@@ -145,7 +145,8 @@ socket_t *socket_aceptar(socket_t *self) {
 }
 
 void socket_shutdown(socket_t *self) {
-
+    shutdown(self->socket_tcp, SHUT_RDWR);
+    close(self->socket_tcp);
 }
 
 void socket_destruir(socket_t *self) {

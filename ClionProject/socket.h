@@ -1,8 +1,6 @@
 #ifndef SOCKET_SERVER_H
 #define SOCKET_SERVER_H
 
-
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -31,8 +29,8 @@ int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantida
 
 socket_t *socket_aceptar(socket_t * self);
 
-#endif //SOCKET_SERVER_H
-
 // ************************************************** client **************************************************
 
-//int socket_conectar(socket_t *self, const char *host, const char *service);
+int socket_conectar(socket_t *self, const char *host, const char *service);
+
+#endif //SOCKET_SERVER_H
