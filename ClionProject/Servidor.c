@@ -14,6 +14,10 @@ struct servidor {
 servidor_t *servidor_inicializar(char *service) {
     servidor_t *servidor = calloc(1, sizeof(servidor_t));
 
+    if (servidor == NULL) {
+        return NULL;
+    }
+
     servidor->tablero = tablero_inicializar(NOMBRE_ARCHIVO_SUDOKU);
 
     if (servidor->tablero == NULL) {
@@ -43,6 +47,9 @@ void servidor_escuchar(servidor_t *self) {
             continuar_escuchando = false;
         } else {
             printf("New client\n");
+
+
+
 //            memset(small_buf, 0, MAX_SMALL_BUF_LEN);
 //            conexion_valida = socket_recibir(socket_activo, small_buf, MAX_SMALL_BUF_LEN - 1);
 

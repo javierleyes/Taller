@@ -37,7 +37,9 @@ int main(int argc, char *argv[]) {
     }
 
     if ((argc == 4) && (strcmp(argv[1], MODO_CLIENT) == 0)) {
-        cliente_inicializar();
+        cliente_t *client = cliente_inicializar(argv[2], argv[3]);
+        cliente_recibir_comandos(client);
+        cliente_destruir(client);
         return 0;
     }
 

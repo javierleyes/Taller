@@ -3,6 +3,7 @@
 
 CMakeFiles/ClionProject.dir/Cliente.c.o: ../Cliente.c
 CMakeFiles/ClionProject.dir/Cliente.c.o: ../Cliente.h
+CMakeFiles/ClionProject.dir/Cliente.c.o: ../socket.h
 
 CMakeFiles/ClionProject.dir/Servidor.c.o: ../Servidor.c
 CMakeFiles/ClionProject.dir/Servidor.c.o: ../Servidor.h

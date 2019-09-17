@@ -6,6 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 
-void cliente_inicializar();
+typedef struct cliente cliente_t;
+
+cliente_t * cliente_inicializar(char *host, char *service);
+
+void cliente_recibir_comandos(cliente_t *self);
+
+void cliente_destruir(cliente_t *self);
 
 #endif //CLIENTE_H

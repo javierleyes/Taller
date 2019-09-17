@@ -1,6 +1,42 @@
 #include "Cliente.h"
+#include "socket.h"
 
-void cliente_inicializar() {
+struct cliente {
+    socket_t *socket;
+};
+
+cliente_t *cliente_inicializar(char *host, char *service) {
+    bool esta_conectado = false;
+
+    cliente_t *cliente = calloc(1, sizeof(cliente_t));
+
+    if (cliente == NULL) {
+        return NULL;
+    }
+
+    cliente->socket = socket_inicializar();
+
+    if (cliente->socket == NULL) {
+        return NULL;
+    }
+
+    esta_conectado = socket_conectar(cliente->socket, host, service);
+
+    if (!esta_conectado) {
+        cliente_destruir(cliente);
+        return NULL;
+    }
+
+    return cliente;
+}
+
+void cliente_destruir(cliente_t *self) {
+    socket_shutdown(self->socket);
+    socket_destruir(self->socket);
+    free(self);
+}
+
+void cliente_recibir_comandos(cliente_t *self) {
 
     printf("Modo client \n");
 
