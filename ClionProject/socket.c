@@ -69,6 +69,15 @@ int socket_recibir(socket_t *self, char *buffer, size_t longitud) {
     return -1;
 }
 
+void socket_shutdown(socket_t *self) {
+    shutdown(self->socket_tcp, SHUT_RDWR);
+    close(self->socket_tcp);
+}
+
+void socket_destruir(socket_t *self) {
+    free(self);
+}
+
 // ************************************************** server **************************************************
 
 int socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
@@ -144,12 +153,10 @@ socket_t *socket_aceptar(socket_t *self) {
     return socket;
 }
 
-void socket_shutdown(socket_t *self) {
-    shutdown(self->socket_tcp, SHUT_RDWR);
-    close(self->socket_tcp);
-}
+// ************************************************** client **************************************************
 
-void socket_destruir(socket_t *self) {
-    close(self->socket_tcp);
-    free(self);
-}
+//int socket_conectar(socket_t *self, const char *host, const char *service) {
+//
+//}
+//
+

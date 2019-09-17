@@ -31,6 +31,6 @@ socket_t *socket_aceptar(socket_t * self);
 
 // ************************************************** client **************************************************
 
-int socket_conectar(socket_t *self, const char *host, const char *service);
+//int socket_conectar(socket_t *self, const char *host, const char *service);
 
 #endif //SOCKET_SERVER_H
