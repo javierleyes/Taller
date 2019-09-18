@@ -54,6 +54,10 @@ void cliente_recibir_comandos(cliente_t *self) {
             printf("V\n");
         } else if (strcmp(comando, "get\n") == 0) {
             printf("G\n");
+
+            int test = socket_enviar(self->socket, (char *)"G", sizeof(char));
+            printf("%s%d","resultado", test);
+
         } else if (strcmp(comando, "reset\n") == 0) {
             printf("R\n");
         } else {

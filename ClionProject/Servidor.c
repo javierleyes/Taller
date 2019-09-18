@@ -36,11 +36,14 @@ servidor_t *servidor_inicializar(char *service) {
 }
 
 void servidor_escuchar(servidor_t *self) {
-    bool continuar_escuchando = true;
     socket_t *socket_activo;
+    bool continuar_escuchando = true;
+    bool socket_esta_activo = true;
+
+
+    socket_activo = socket_aceptar(self->socket);
 
     while (continuar_escuchando) {
-        socket_activo = socket_aceptar(self->socket);
 
         if (socket_activo == NULL) {
             printf("Error: %s\n", strerror(errno));
@@ -48,7 +51,15 @@ void servidor_escuchar(servidor_t *self) {
         } else {
             printf("New client\n");
 
+            char *buffer = calloc(1, sizeof(char));
 
+            socket_esta_activo = socket_recibir(socket_activo, buffer, sizeof(char));
+
+            printf("%s%s","valor recibido: ", buffer);
+
+            if (!socket_esta_activo) {
+                continuar_escuchando = false;
+            }
 
 //            memset(small_buf, 0, MAX_SMALL_BUF_LEN);
 //            conexion_valida = socket_recibir(socket_activo, small_buf, MAX_SMALL_BUF_LEN - 1);
@@ -64,10 +75,9 @@ void servidor_escuchar(servidor_t *self) {
 //                printf("Sent %i/%i bytes\n\n", socket_enviar(socket_activo, tmp, len), len);
 //            }
         }
-
-        socket_shutdown(socket_activo);
     }
 
+    socket_shutdown(socket_activo);
     socket_shutdown(self->socket);
 }
 

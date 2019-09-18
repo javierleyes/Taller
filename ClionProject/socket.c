@@ -2,8 +2,6 @@
 
 #include "socket.h"
 
-#define ERROR 1
-
 struct socket {
     int socket_tcp;
 };
