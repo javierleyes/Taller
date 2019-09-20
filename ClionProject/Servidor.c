@@ -42,8 +42,6 @@ void servidor_escuchar(servidor_t *self) {
 
     socket_activo = socket_aceptar(self->socket);
 
-//    unsigned int longitud = 0;
-
     char *comando_recibido = calloc(1, sizeof(char));
 
     while (continuar_escuchando) {
@@ -63,7 +61,6 @@ void servidor_escuchar(servidor_t *self) {
             socket_enviar(socket_activo, response, 722 * sizeof(char));
 
             free(response);
-
 
             if (!socket_esta_activo) {
                 continuar_escuchando = false;

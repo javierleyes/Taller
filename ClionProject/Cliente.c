@@ -43,8 +43,6 @@ void cliente_destruir(cliente_t *self) {
 
 void cliente_recibir_comandos(cliente_t *self) {
 
-    printf("Modo client \n");
-
     char *input = calloc(13, sizeof(char));
     char *comando = calloc(8, sizeof(char));
     char *comando_compuesto = calloc(4, sizeof(char));
@@ -60,7 +58,6 @@ void cliente_recibir_comandos(cliente_t *self) {
             socket_enviar(self->socket, (char *)COMANDO_VERIFY, sizeof(char));
         } else if (strcmp(comando, "get\n") == 0) {
 
-//            printf("G\n");
             socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
 //            int test = socket_enviar(self->socket, (char *)"G", sizeof(char));
 //            printf("%s%d","resultado", test);
@@ -71,7 +68,6 @@ void cliente_recibir_comandos(cliente_t *self) {
             printf("%s", buffer);
 
             free(buffer);
-
 
         } else if (strcmp(comando, "reset\n") == 0) {
             printf("R\n");
@@ -103,6 +99,8 @@ void cliente_recibir_comandos(cliente_t *self) {
 
         fgets(input, 13, stdin);
     }
+
+    socket_shutdown(self->socket);
 
     free(input);
     free(comando);

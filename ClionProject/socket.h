@@ -17,7 +17,7 @@ socket_t *socket_inicializar();
 
 int socket_enviar(socket_t *self, char *buffer, size_t longitud);
 
-int socket_recibir(socket_t *self, char *buffer, size_t longitud);
+bool socket_recibir(socket_t *self, char *buffer, size_t longitud);
 
 void socket_shutdown(socket_t *self);
 

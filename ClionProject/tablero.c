@@ -145,9 +145,6 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 void tablero_get(tablero_t *self, char *response) {
     int posicion_tablero = 0;
 
-//    printf("\nComando GET \n");
-
-    printf("U===========U===========U===========U\n");
     strncpy(response + posicion_tablero, "U===========U===========U===========U\n", LONGITUD_FILA);
     posicion_tablero += LONGITUD_FILA;
 
@@ -155,12 +152,10 @@ void tablero_get(tablero_t *self, char *response) {
 
         for (int i = j; i < (j + CANTIDAD_CELDAS_FILA); i += 3) {
 
-            printf("U");
             strncpy(response + posicion_tablero, "U", 1);
             posicion_tablero++;
 
             if (self->valores_juego[i].valor != 0) {
-                printf("%1s%d%1s", " ", self->valores_juego[i].valor, " ");
                 strncpy(response + posicion_tablero, " ", 1);
                 posicion_tablero++;
 
@@ -170,17 +165,14 @@ void tablero_get(tablero_t *self, char *response) {
                 strncpy(response + posicion_tablero, " ", 1);
                 posicion_tablero++;
             } else {
-                printf("%1s%1s%1s", " ", " ", " ");
                 strncpy(response + posicion_tablero, "   ", 3);
                 posicion_tablero += 3;
             }
 
-            printf("|");
             strncpy(response + posicion_tablero, "|", 1);
             posicion_tablero++;
 
             if (self->valores_juego[i + 1].valor != 0) {
-                printf("%1s%d%1s", " ", self->valores_juego[i + 1].valor, " ");
                 strncpy(response + posicion_tablero, " ", 1);
                 posicion_tablero++;
 
@@ -190,17 +182,14 @@ void tablero_get(tablero_t *self, char *response) {
                 strncpy(response + posicion_tablero, " ", 1);
                 posicion_tablero++;
             } else {
-                printf("%1s%1s%1s", " ", " ", " ");
                 strncpy(response + posicion_tablero, "   ", 3);
                 posicion_tablero += 3;
             }
 
-            printf("|");
             strncpy(response + posicion_tablero, "|", 1);
             posicion_tablero++;
 
             if (self->valores_juego[i + 2].valor != 0) {
-                printf("%1s%d%1s", " ", self->valores_juego[i + 2].valor, " ");
                 strncpy(response + posicion_tablero, " ", 1);
                 posicion_tablero++;
 
@@ -210,22 +199,18 @@ void tablero_get(tablero_t *self, char *response) {
                 strncpy(response + posicion_tablero, " ", 1);
                 posicion_tablero++;
             } else {
-                printf("%1s%1s%1s", " ", " ", " ");
                 strncpy(response + posicion_tablero, "   ", 3);
                 posicion_tablero += 3;
             }
         }
 
-        printf("U\n");
         strncpy(response + posicion_tablero, "U\n", 2);
         posicion_tablero += 2;
 
         if ((((j + 1) % 19) == 0) || (((j + 1) % 46) == 0) || (((j + 1) % 73) == 0)) {
-            printf("U===========U===========U===========U\n");
             strncpy(response + posicion_tablero, "U===========U===========U===========U\n", LONGITUD_FILA);
             posicion_tablero += LONGITUD_FILA;
         } else {
-            printf("U---+---+---U---+---+---U---+---+---U\n");
             strncpy(response + posicion_tablero, "U---+---+---U---+---+---U---+---+---U\n", LONGITUD_FILA);
             posicion_tablero += LONGITUD_FILA;
         }
@@ -245,8 +230,6 @@ void tablero_put(tablero_t *self, int valor, int fila, int columna) {
     }
 
     self->valores_juego[posicion_tablero].valor = valor;
-
-//    tablero_get(self);
 }
 
 bool tablero_verify(tablero_t *self) {
@@ -279,15 +262,6 @@ void tablero_resetear(tablero_t *self) {
     for (int i = 0; i < TOTAL_CELDAS; i++) {
         memcpy(&(self->valores_juego[i]).valor, &(self->valores_iniciales[i]).valor, sizeof(int));
     }
-}
-
-void tablero_exit(tablero_t *self) {
-
-    printf("\nComando exito \n");
-
-    // cerrar socket
-
-    tablero_destruir(self);
 }
 
 void tablero_destruir(tablero_t *self) {

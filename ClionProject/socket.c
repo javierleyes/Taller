@@ -45,7 +45,7 @@ int socket_enviar(socket_t *self, char *buffer, size_t longitud) {
     return -1;
 }
 
-int socket_recibir(socket_t *self, char *buffer, size_t longitud) {
+bool socket_recibir(socket_t *self, char *buffer, size_t longitud) {
     int bytes_recibidos = 0;
     int bytes = 0;
     bool socket_valido = true;
@@ -54,17 +54,13 @@ int socket_recibir(socket_t *self, char *buffer, size_t longitud) {
         bytes = recv(self->socket_tcp, &buffer[bytes_recibidos], longitud - bytes_recibidos, MSG_NOSIGNAL);
 
         if (bytes <= 0) {
-            socket_valido = false;
+            return false;
         } else {
             bytes_recibidos += bytes;
         }
     }
 
-    if (socket_valido) {
-        return bytes_recibidos;
-    }
-
-    return -1;
+    return true;
 }
 
 void socket_shutdown(socket_t *self) {
