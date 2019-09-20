@@ -6,35 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/javi/repository/Taller/ClionProject/Servidor.c
+/home/javi/repository/Taller/ClionProject/tablero.c
 tablero.h
 /home/javi/repository/Taller/ClionProject/tablero.h
-Servidor.h
-/home/javi/repository/Taller/ClionProject/Servidor.h
-socket.h
-/home/javi/repository/Taller/ClionProject/socket.h
-
-/home/javi/repository/Taller/ClionProject/Servidor.h
-
-/home/javi/repository/Taller/ClionProject/socket.h
-sys/types.h
--
-sys/socket.h
--
-netdb.h
--
-unistd.h
--
-string.h
--
-stdio.h
--
-errno.h
--
-stdbool.h
--
-stdlib.h
--
 
 /home/javi/repository/Taller/ClionProject/tablero.h
 stdlib.h

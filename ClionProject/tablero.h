@@ -12,7 +12,7 @@ typedef struct tablero tablero_t;
 
 tablero_t *tablero_inicializar(const char *nombre_archivo);
 
-void tablero_get(tablero_t *self);
+void tablero_get(tablero_t *self, char *response);
 
 void tablero_put(tablero_t *self, int valor, int fila, int columna);
 

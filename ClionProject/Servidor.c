@@ -40,8 +40,11 @@ void servidor_escuchar(servidor_t *self) {
     bool continuar_escuchando = true;
     bool socket_esta_activo = true;
 
-
     socket_activo = socket_aceptar(self->socket);
+
+//    unsigned int longitud = 0;
+
+    char *comando_recibido = calloc(1, sizeof(char));
 
     while (continuar_escuchando) {
 
@@ -49,33 +52,26 @@ void servidor_escuchar(servidor_t *self) {
             printf("Error: %s\n", strerror(errno));
             continuar_escuchando = false;
         } else {
-            printf("New client\n");
 
-            char *buffer = calloc(1, sizeof(char));
+            // recibo el comando
+            socket_esta_activo = socket_recibir(socket_activo, comando_recibido, sizeof(char));
+            printf("%s%s", "comando recibido: ", comando_recibido);
 
-            socket_esta_activo = socket_recibir(socket_activo, buffer, sizeof(char));
+            char *response = calloc(722, sizeof(char));
+            tablero_get(self->tablero, response);
 
-            printf("%s%s","valor recibido: ", buffer);
+            socket_enviar(socket_activo, response, 722 * sizeof(char));
+
+            free(response);
+
 
             if (!socket_esta_activo) {
                 continuar_escuchando = false;
             }
-
-//            memset(small_buf, 0, MAX_SMALL_BUF_LEN);
-//            conexion_valida = socket_recibir(socket_activo, small_buf, MAX_SMALL_BUF_LEN - 1);
-
-//            len = atoi(small_buf);
-//            printf("Echo %i bytes\n", len);
-
-//            if (len == 0) {
-//                printf("Zero bytes. Bye!\n");
-//                continuar_escuchando = false;
-//            } else {
-//                printf("Received %i/%i bytes\n", socket_recibir(socket_activo, tmp, len), len);
-//                printf("Sent %i/%i bytes\n\n", socket_enviar(socket_activo, tmp, len), len);
-//            }
         }
     }
+
+    free(comando_recibido);
 
     socket_shutdown(socket_activo);
     socket_shutdown(self->socket);

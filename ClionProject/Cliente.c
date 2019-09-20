@@ -1,6 +1,11 @@
 #include "Cliente.h"
 #include "socket.h"
 
+#define COMANDO_GET "G"
+#define COMANDO_PUT "P"
+#define COMANDO_VERIFY "V"
+#define COMANDO_RESET "R"
+
 struct cliente {
     socket_t *socket;
 };
@@ -52,14 +57,25 @@ void cliente_recibir_comandos(cliente_t *self) {
 
         if (strcmp(comando, "verify\n") == 0) {
             printf("V\n");
+            socket_enviar(self->socket, (char *)COMANDO_VERIFY, sizeof(char));
         } else if (strcmp(comando, "get\n") == 0) {
-            printf("G\n");
 
-            int test = socket_enviar(self->socket, (char *)"G", sizeof(char));
-            printf("%s%d","resultado", test);
+//            printf("G\n");
+            socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
+//            int test = socket_enviar(self->socket, (char *)"G", sizeof(char));
+//            printf("%s%d","resultado", test);
+
+            char *buffer = calloc(722, sizeof(char));
+
+            socket_recibir(self->socket, buffer, 722 * sizeof(char));
+            printf("%s", buffer);
+
+            free(buffer);
+
 
         } else if (strcmp(comando, "reset\n") == 0) {
             printf("R\n");
+            socket_enviar(self->socket, (char *)COMANDO_RESET, sizeof(char));
         } else {
             strncpy(comando_compuesto, input, 3);
 
@@ -71,7 +87,8 @@ void cliente_recibir_comandos(cliente_t *self) {
 
                     if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
                         printf("P\n");
-//                printf("valor valido");
+//                        char *comando_put = "P"
+//                        socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
                     } else {
                         printf("Error en el valor ingresado. Rango soportado: [1,9]\n");
                     }
