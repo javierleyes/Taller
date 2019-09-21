@@ -5,18 +5,20 @@
 #define COMANDO_PUT "P"
 #define COMANDO_VERIFY "V"
 #define COMANDO_RESET "R"
+#define TAMANIO_TABLERO 722
 
 struct cliente {
     socket_t *socket;
 };
 
-static void comando_get(cliente_t *self) {
+//*************************************** FUNCIONES PRIVADAS ***************************************
 
+static void comando_get(cliente_t *self) {
     socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
 
-    char *buffer = calloc(722, sizeof(char));
+    char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
 
-    socket_recibir(self->socket, buffer, 722 * sizeof(char));
+    socket_recibir(self->socket, buffer, TAMANIO_TABLERO * sizeof(char));
 
     printf("%s", buffer);
 
@@ -34,6 +36,20 @@ static void comando_verify(cliente_t *self) {
 
     free(buffer);
 }
+
+static void comando_reset(cliente_t *self) {
+    socket_enviar(self->socket, (char *)COMANDO_RESET, sizeof(char));
+
+    char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
+
+    socket_recibir(self->socket, buffer, TAMANIO_TABLERO * sizeof(char));
+
+    printf("%s", buffer);
+
+    free(buffer);
+}
+
+//*************************************** FUNCIONES ************************************************
 
 cliente_t *cliente_inicializar(char *host, char *service) {
     bool esta_conectado = false;
@@ -87,8 +103,9 @@ void cliente_recibir_comandos(cliente_t *self) {
             comando_get(self);
 
         } else if (strcmp(comando, "reset\n") == 0) {
-            printf("R\n");
-            socket_enviar(self->socket, (char *)COMANDO_RESET, sizeof(char));
+
+            comando_reset(self);
+
         } else {
             strncpy(comando_compuesto, input, 3);
 

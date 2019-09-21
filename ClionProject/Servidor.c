@@ -48,6 +48,10 @@ static void comando_verify(servidor_t *self, socket_t *socket_activo) {
     free(response);
 }
 
+static void comando_reset(servidor_t *self) {
+    tablero_resetear(self->tablero);
+}
+
 //*************************************** FUNCIONES ************************************************
 
 servidor_t *servidor_inicializar(char *service) {
@@ -101,25 +105,14 @@ void servidor_escuchar(servidor_t *self) {
                     comando_verify(self, socket_activo);
                     break;
 
-//                case 'R':
-//                    comando_reset();
-//                    break;
+                case 'R':
+                    comando_reset(self);
+                    comando_get(self, socket_activo);
+                    break;
 
                     //case 'P':
 //                    break;
             }
-
-
-
-
-
-
-
-
-
-
-
-
 
             if (!socket_esta_activo) {
                 continuar_escuchando = false;
