@@ -15,9 +15,6 @@ socket_t *socket_inicializar() {
         printf("socket creation failed...\n");
         socket_destruir(socket_server);
         return NULL;
-
-    } else {
-        printf("Socket successfully created..\n");
     }
 
     return socket_server;
@@ -123,16 +120,12 @@ bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantid
 
     freeaddrinfo(ptr);
 
-    printf("Socket successfully binded..\n");
-
     // LISTEN
     status = listen(self->socket_tcp, cantidad_clientes);
     if (status == -1) {
         printf("Error: %s\n", strerror(errno));
         return false;
     }
-
-    printf("Server listening..\n");
 
     return true;
 }

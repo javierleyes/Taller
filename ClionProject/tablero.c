@@ -1,6 +1,5 @@
 #include "tablero.h"
 
-#define LONGITUD_TABLERO 722
 #define LONGITUD_FILA 38
 #define TOTAL_CELDAS 81
 #define CANTIDAD_CELDAS_FILA 9
@@ -18,7 +17,6 @@ struct tablero {
 //*************************************** FUNCIONES PRIVADAS ***************************************
 
 static bool _hay_valores_repetidos(int *valores) {
-
     for (int i = 0; i < CANTIDAD_CELDAS_FILA; i++) {
 
         for (int j = i + 1; j < CANTIDAD_CELDAS_FILA; j++) {
@@ -103,9 +101,6 @@ static bool _validar_sectores(tablero_t *self) {
 //*************************************** FUNCIONES ************************************************
 
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
-
-    printf("\nFuncion inicializar \n");
-
     tablero_t *tablero = calloc(1, sizeof(tablero_t));
     tablero->valores_iniciales = calloc(TOTAL_CELDAS, sizeof(celda_t));
     tablero->valores_juego = calloc(TOTAL_CELDAS, sizeof(celda_t));
@@ -214,7 +209,6 @@ void tablero_get(tablero_t *self, char *response) {
 }
 
 void tablero_put(tablero_t *self, int valor, int fila, int columna) {
-
     printf("%s%d%s%d%s%d%s", "\nComando PUT ", valor, " in ", fila, ",", columna, "\n");
 
     int posicion_tablero = (((fila - 1) * CANTIDAD_CELDAS_FILA) + ((columna - 1)));
@@ -245,18 +239,12 @@ bool tablero_verify(tablero_t *self) {
 }
 
 void tablero_resetear(tablero_t *self) {
-
-    printf("\nComando resetear \n");
-
     for (int i = 0; i < TOTAL_CELDAS; i++) {
         memcpy(&(self->valores_juego[i]).valor, &(self->valores_iniciales[i]).valor, sizeof(int));
     }
 }
 
 void tablero_destruir(tablero_t *self) {
-
-    printf("\nFuncion destruir \n");
-
     free(self->valores_iniciales);
     free(self->valores_juego);
     free(self);
