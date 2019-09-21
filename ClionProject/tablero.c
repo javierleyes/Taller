@@ -15,9 +15,7 @@ struct tablero {
     celda_t *valores_juego;
 };
 
-//**************************************************************************************************
 //*************************************** FUNCIONES PRIVADAS ***************************************
-//**************************************************************************************************
 
 static bool _hay_valores_repetidos(int *valores) {
 
@@ -102,9 +100,7 @@ static bool _validar_sectores(tablero_t *self) {
     return true;
 }
 
-//**************************************************************************************************
 //*************************************** FUNCIONES ************************************************
-//**************************************************************************************************
 
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
@@ -233,25 +229,18 @@ void tablero_put(tablero_t *self, int valor, int fila, int columna) {
 }
 
 bool tablero_verify(tablero_t *self) {
-
-    printf("\nComando verify \n");
-
     if (!_validar_filas(self)) {
-        printf("ERROR\n");
         return false;
     }
 
     if (!_validar_columnas(self)) {
-        printf("ERROR\n");
         return false;
     }
 
     if (!_validar_sectores(self)) {
-        printf("ERROR\n");
         return false;
     }
 
-    printf("OK\n");
     return true;
 }
 

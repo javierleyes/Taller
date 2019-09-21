@@ -10,6 +10,31 @@ struct cliente {
     socket_t *socket;
 };
 
+static void comando_get(cliente_t *self) {
+
+    socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
+
+    char *buffer = calloc(722, sizeof(char));
+
+    socket_recibir(self->socket, buffer, 722 * sizeof(char));
+
+    printf("%s", buffer);
+
+    free(buffer);
+}
+
+static void comando_verify(cliente_t *self) {
+    socket_enviar(self->socket, (char *)COMANDO_VERIFY, sizeof(char));
+
+    char *buffer = calloc(6, sizeof(char));
+
+    socket_recibir(self->socket, buffer, 6 * sizeof(char));
+
+    printf("%s", buffer);
+
+    free(buffer);
+}
+
 cliente_t *cliente_inicializar(char *host, char *service) {
     bool esta_conectado = false;
 
@@ -54,20 +79,12 @@ void cliente_recibir_comandos(cliente_t *self) {
         strncpy(comando, input, (7 * sizeof(char)));
 
         if (strcmp(comando, "verify\n") == 0) {
-            printf("V\n");
-            socket_enviar(self->socket, (char *)COMANDO_VERIFY, sizeof(char));
+
+            comando_verify(self);
+
         } else if (strcmp(comando, "get\n") == 0) {
 
-            socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
-//            int test = socket_enviar(self->socket, (char *)"G", sizeof(char));
-//            printf("%s%d","resultado", test);
-
-            char *buffer = calloc(722, sizeof(char));
-
-            socket_recibir(self->socket, buffer, 722 * sizeof(char));
-            printf("%s", buffer);
-
-            free(buffer);
+            comando_get(self);
 
         } else if (strcmp(comando, "reset\n") == 0) {
             printf("R\n");
