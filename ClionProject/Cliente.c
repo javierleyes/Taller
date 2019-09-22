@@ -128,13 +128,14 @@ void cliente_recibir_comandos(cliente_t *self) {
 
                         socket_enviar(self->socket, buffer, 4 * sizeof(char));
 
-//                        char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
-//
-//                        socket_recibir(self->socket, buffer, TAMANIO_TABLERO * sizeof(char));
-//
-//                        printf("%s", buffer);
+                        char *respuesta = calloc(TAMANIO_TABLERO, sizeof(char));
+
+                        socket_recibir(self->socket, respuesta, TAMANIO_TABLERO * sizeof(char));
+
+                        printf("%s", respuesta);
 
                         free(buffer);
+                        free(respuesta);
 
 
 

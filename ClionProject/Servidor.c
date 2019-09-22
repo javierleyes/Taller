@@ -4,10 +4,11 @@
 #include "socket.h"
 
 #define CANTIDAD_CLIENTES 1
-#define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define TAMANIO_TABLERO 722
+#define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define OK "OK\n"
 #define ERROR "ERROR\n"
+#define CELDA_NO_MODIFICABLE "La celda indicada no es modificable\n"
 
 struct servidor {
     tablero_t *tablero;
@@ -29,29 +30,31 @@ static void comando_get(servidor_t *self, socket_t *socket_activo) {
 }
 
 static void comando_verify(servidor_t *self, socket_t *socket_activo) {
-    char *response;
-    bool tablero_valido;
-
-    tablero_valido = tablero_verify(self->tablero);
-
-    if (tablero_valido) {
-        response = calloc(6, sizeof(char));
-        strncpy(response, OK, 6 * sizeof(char));
-
-        socket_enviar(socket_activo, response, 6 * sizeof(char));
-
+    if (tablero_verify(self->tablero)) {
+        socket_enviar(socket_activo, OK, 6 * sizeof(char));
     } else {
-        response = calloc(6, sizeof(char));
-        strncpy(response, ERROR, 6 * sizeof(char));
-
-        socket_enviar(socket_activo, response, 6 * sizeof(char));
+        socket_enviar(socket_activo, ERROR, 6 * sizeof(char));
     }
-
-    free(response);
 }
 
 static void comando_reset(servidor_t *self) {
     tablero_resetear(self->tablero);
+}
+
+static void comando_put(servidor_t *self, socket_t *socket_activo) {
+    char *valor = calloc(1, sizeof(char));
+    char *fila = calloc(1, sizeof(char));
+    char *columna = calloc(1, sizeof(char));
+
+    socket_recibir(socket_activo, valor, sizeof(char));
+    socket_recibir(socket_activo, fila, sizeof(char));
+    socket_recibir(socket_activo, columna, sizeof(char));
+
+    if (tablero_put(self->tablero, atoi(valor), atoi(fila), atoi(columna))) {
+        comando_get(self, socket_activo);
+    } else {
+        socket_enviar(socket_activo, CELDA_NO_MODIFICABLE, strlen(CELDA_NO_MODIFICABLE) + 1);
+    }
 }
 
 //*************************************** FUNCIONES ************************************************
@@ -98,7 +101,7 @@ void servidor_escuchar(servidor_t *self) {
 
             socket_esta_activo = socket_recibir(socket_activo, comando, sizeof(char));
 
-            switch(*comando) {
+            switch (*comando) {
                 case 'G':
                     comando_get(self, socket_activo);
                     break;
@@ -112,8 +115,9 @@ void servidor_escuchar(servidor_t *self) {
                     comando_get(self, socket_activo);
                     break;
 
-                    //case 'P':
-//                    break;
+                case 'P':
+                    comando_put(self, socket_activo);
+                    break;
             }
 
             if (!socket_esta_activo) {

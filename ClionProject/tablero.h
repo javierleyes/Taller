@@ -14,7 +14,7 @@ tablero_t *tablero_inicializar(const char *nombre_archivo);
 
 void tablero_get(tablero_t *self, char *response);
 
-void tablero_put(tablero_t *self, int valor, int fila, int columna);
+bool tablero_put(tablero_t *self, int valor, int fila, int columna);
 
 void tablero_destruir(tablero_t *self);
 
