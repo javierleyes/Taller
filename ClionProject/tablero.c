@@ -14,7 +14,7 @@ struct tablero {
     celda_t *valores_juego;
 };
 
-//*************************************** FUNCIONES PRIVADAS ***************************************
+// ************************************************ FUNCIONES PRIVADAS ************************************************
 
 static bool _hay_valores_repetidos(int *valores) {
     for (int i = 0; i < CANTIDAD_CELDAS_FILA; i++) {
@@ -98,7 +98,7 @@ static bool _validar_sectores(tablero_t *self) {
     return true;
 }
 
-//*************************************** FUNCIONES ************************************************
+// ************************************************ FUNCIONES ************************************************
 
 tablero_t *tablero_inicializar(const char *nombre_archivo) {
     tablero_t *tablero = calloc(1, sizeof(tablero_t));

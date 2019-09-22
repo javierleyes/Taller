@@ -15,7 +15,7 @@ struct servidor {
     socket_t *socket;
 };
 
-//*************************************** FUNCIONES PRIVADAS ***************************************
+// ********************************************* FUNCIONES PRIVADAS *********************************************
 
 static void comando_get(servidor_t *self, socket_t *socket_activo) {
     char *response;
@@ -57,7 +57,7 @@ static void comando_put(servidor_t *self, socket_t *socket_activo) {
     }
 }
 
-//*************************************** FUNCIONES ************************************************
+// ************************************************** FUNCIONES **************************************************
 
 servidor_t *servidor_inicializar(char *service) {
     servidor_t *servidor = calloc(1, sizeof(servidor_t));
