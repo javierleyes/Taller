@@ -2,10 +2,12 @@
 #include "socket.h"
 
 #define TAMANIO_TABLERO 722
-#define COMANDO_GET "G"
-#define COMANDO_VERIFY "V"
-#define COMANDO_RESET "R"
-
+#define COMANDO_GET_SERVIDOR "G"
+#define COMANDO_VERIFY_SERVIDOR "V"
+#define COMANDO_RESET_SERVIDOR "R"
+#define VALOR_FUERA_DE_RANGO "Error en el valor ingresado. Rango soportado: [1,9]\n"
+#define INDICES_FUERA_DE_RANGO "Error en los indices. Rango soportado: [1,9]\n"
+#define MODO_NO_SOPORTADO "Modo no soportado \n"
 
 struct cliente {
     socket_t *socket;
@@ -14,7 +16,7 @@ struct cliente {
 //*************************************** FUNCIONES PRIVADAS ***************************************
 
 static void comando_get(cliente_t *self) {
-    socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
+    socket_enviar(self->socket, (char *)COMANDO_GET_SERVIDOR, sizeof(char));
 
     char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
 
@@ -26,7 +28,7 @@ static void comando_get(cliente_t *self) {
 }
 
 static void comando_verify(cliente_t *self) {
-    socket_enviar(self->socket, (char *)COMANDO_VERIFY, sizeof(char));
+    socket_enviar(self->socket, (char *)COMANDO_VERIFY_SERVIDOR, sizeof(char));
 
     char *buffer = calloc(6, sizeof(char));
 
@@ -38,7 +40,7 @@ static void comando_verify(cliente_t *self) {
 }
 
 static void comando_reset(cliente_t *self) {
-    socket_enviar(self->socket, (char *)COMANDO_RESET, sizeof(char));
+    socket_enviar(self->socket, (char *)COMANDO_RESET_SERVIDOR, sizeof(char));
 
     char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
 
@@ -137,27 +139,15 @@ void cliente_recibir_comandos(cliente_t *self) {
                         free(buffer);
                         free(respuesta);
 
-
-
-
-
-
-
-
-
-
-
-
-
                     } else {
-                        printf("Error en el valor ingresado. Rango soportado: [1,9]\n");
+                        printf(VALOR_FUERA_DE_RANGO);
                     }
 
                 } else {
-                    printf("Error en los indices. Rango soportado: [1,9]\n");
+                    printf(INDICES_FUERA_DE_RANGO);
                 }
             } else {
-                printf("Modo no soportado \n");
+                printf(MODO_NO_SOPORTADO);
             }
         }
 
