@@ -32,16 +32,6 @@ socket.h
 
 /home/javi/repository/Taller/ClionProject/Servidor.h
 
-/home/javi/repository/Taller/ClionProject/main.c
-stdio.h
--
-string.h
--
-Cliente.h
-/home/javi/repository/Taller/ClionProject/Cliente.h
-Servidor.h
-/home/javi/repository/Taller/ClionProject/Servidor.h
-
 /home/javi/repository/Taller/ClionProject/socket.h
 sys/types.h
 -

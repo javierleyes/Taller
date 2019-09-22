@@ -19,9 +19,7 @@ struct servidor {
 // ********************************************* FUNCIONES PRIVADAS *********************************************
 
 static void comando_get(servidor_t *self, socket_t *socket_activo) {
-    char *response;
-
-    response = calloc(TAMANIO_TABLERO, sizeof(char));
+    char *response = calloc(TAMANIO_TABLERO, sizeof(char));
 
     tablero_get(self->tablero, response);
 
