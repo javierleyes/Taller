@@ -6,7 +6,9 @@
 
 #define MODO_SERVER "server"
 #define MODO_CLIENT "client"
+
 #define MODO_NO_SOPORTADO "Modo no soportado, el primer parametro debe ser server o client\n"
+
 #define MODO_USO_SERVER "Uso: ./tp server <puerto>\n"
 #define MODO_USO_CLIENT "Uso: ./tp client <host> <puerto>\n"
 

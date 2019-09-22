@@ -2,9 +2,17 @@
 #include "socket.h"
 
 #define TAMANIO_TABLERO 722
+
+#define INPUT_EXIT "exit\n"
+#define INPUT_VERIFY "verify\n"
+#define INPUT_GET "get\n"
+#define INPUT_RESET "reset\n"
+#define INPUT_PUT "put"
+
 #define COMANDO_GET_SERVIDOR "G"
 #define COMANDO_VERIFY_SERVIDOR "V"
 #define COMANDO_RESET_SERVIDOR "R"
+
 #define VALOR_FUERA_DE_RANGO "Error en el valor ingresado. Rango soportado: [1,9]\n"
 #define INDICES_FUERA_DE_RANGO "Error en los indices. Rango soportado: [1,9]\n"
 #define MODO_NO_SOPORTADO "Modo no soportado \n"
@@ -92,26 +100,26 @@ void cliente_recibir_comandos(cliente_t *self) {
 
     fgets(input, 13, stdin);
 
-    while(strcmp(input, "exit\n") != 0) {
+    while(strcmp(input, INPUT_EXIT) != 0) {
 
         strncpy(comando, input, (7 * sizeof(char)));
 
-        if (strcmp(comando, "verify\n") == 0) {
+        if (strcmp(comando, INPUT_VERIFY) == 0) {
 
             comando_verify(self);
 
-        } else if (strcmp(comando, "get\n") == 0) {
+        } else if (strcmp(comando, INPUT_GET) == 0) {
 
             comando_get(self);
 
-        } else if (strcmp(comando, "reset\n") == 0) {
+        } else if (strcmp(comando, INPUT_RESET) == 0) {
 
             comando_reset(self);
 
         } else {
             strncpy(comando_compuesto, input, 3);
 
-            if (strcmp(comando_compuesto, "put") == 0) {
+            if (strcmp(comando_compuesto, INPUT_PUT) == 0) {
 
                 if ((((input[9] - '0') > 0) && ((input[9] - '0') < 10)) &&
                     (((input[11] - '0') > 0) && ((input[11] - '0') < 10))) {
