@@ -6,6 +6,8 @@
 #define CANTIDAD_CLIENTES 1
 #define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define TAMANIO_TABLERO 722
+#define OK "OK\n"
+#define ERROR "ERROR\n"
 
 struct servidor {
     tablero_t *tablero;
@@ -34,13 +36,13 @@ static void comando_verify(servidor_t *self, socket_t *socket_activo) {
 
     if (tablero_valido) {
         response = calloc(6, sizeof(char));
-        strncpy(response, "OK\n", 6 * sizeof(char));
+        strncpy(response, OK, 6 * sizeof(char));
 
         socket_enviar(socket_activo, response, 6 * sizeof(char));
 
     } else {
         response = calloc(6, sizeof(char));
-        strncpy(response, "ERROR\n", 6 * sizeof(char));
+        strncpy(response, ERROR, 6 * sizeof(char));
 
         socket_enviar(socket_activo, response, 6 * sizeof(char));
     }

@@ -113,12 +113,41 @@ void cliente_recibir_comandos(cliente_t *self) {
 
                 if ((((input[9] - '0') > 0) && ((input[9] - '0') < 10)) &&
                     (((input[11] - '0') > 0) && ((input[11] - '0') < 10))) {
-//            printf("Indices validos");
 
                     if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
-                        printf("P\n");
-//                        char *comando_put = "P"
-//                        socket_enviar(self->socket, (char *)COMANDO_GET, sizeof(char));
+
+                        uint8_t valor = input[4];
+                        uint8_t fila = input[9];
+                        uint8_t columna = input[11];
+
+                        char *buffer = calloc(4, sizeof(char));
+                        strncpy(buffer, "P", sizeof(char));
+                        memset(buffer + 1, valor, sizeof(uint8_t));
+                        memset(buffer + 2, fila, sizeof(uint8_t));
+                        memset(buffer + 3, columna, sizeof(uint8_t));
+
+                        socket_enviar(self->socket, buffer, 4 * sizeof(char));
+
+//                        char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
+//
+//                        socket_recibir(self->socket, buffer, TAMANIO_TABLERO * sizeof(char));
+//
+//                        printf("%s", buffer);
+
+                        free(buffer);
+
+
+
+
+
+
+
+
+
+
+
+
+
                     } else {
                         printf("Error en el valor ingresado. Rango soportado: [1,9]\n");
                     }
