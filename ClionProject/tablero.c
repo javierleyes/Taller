@@ -14,7 +14,7 @@ struct tablero {
     celda_t *valores_juego;
 };
 
-// ************************************************ FUNCIONES PRIVADAS ************************************************
+// *********************************************** FUNCIONES PRIVADAS ***********************************************
 
 static bool _hay_valores_repetidos(int *valores) {
     for (int i = 0; i < CANTIDAD_CELDAS_FILA; i++) {
@@ -209,13 +209,9 @@ void tablero_get(tablero_t *self, char *response) {
 }
 
 bool tablero_put(tablero_t *self, int valor, int fila, int columna) {
-    printf("%s%d%s%d%s%d%s", "\nComando PUT ", valor, " in ", fila, ",", columna, "\n");
-
     int posicion_tablero = (((fila - 1) * CANTIDAD_CELDAS_FILA) + ((columna - 1)));
 
     if (self->valores_juego[posicion_tablero].modificable == false) {
-        printf("La celda no se puede modificar \n");
-
         return false;
     }
 

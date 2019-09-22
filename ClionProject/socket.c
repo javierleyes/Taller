@@ -12,7 +12,6 @@ socket_t *socket_inicializar() {
     socket_server->socket_tcp = socket(AF_INET, SOCK_STREAM, 0);
 
     if (socket_server->socket_tcp == -1) {
-        printf("socket creation failed...\n");
         socket_destruir(socket_server);
         return NULL;
     }
@@ -91,7 +90,6 @@ bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantid
     }
 
     if (self->socket_tcp == -1) {
-        printf("Error: %s\n", strerror(errno));
         freeaddrinfo(result);
         return false;
     }
@@ -100,7 +98,6 @@ bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantid
     val = 1;
     status = setsockopt(self->socket_tcp, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
     if (status == -1) {
-        printf("Error: %s\n", strerror(errno));
         close(self->socket_tcp);
         freeaddrinfo(result);
         return false;
@@ -113,8 +110,6 @@ bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantid
 
         if (status != -1) {
             esta_asignado_escuchado = true;
-        } else {
-            printf("Error: %s\n", strerror(errno));
         }
     }
 
@@ -123,7 +118,6 @@ bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantid
     // LISTEN
     status = listen(self->socket_tcp, cantidad_clientes);
     if (status == -1) {
-        printf("Error: %s\n", strerror(errno));
         return false;
     }
 
@@ -136,12 +130,10 @@ socket_t *socket_aceptar(socket_t *self) {
     socket->socket_tcp = accept(self->socket_tcp, NULL, NULL);
 
     if (socket->socket_tcp < 0) {
-        printf("server acccept failed...\n");
         free(socket);
         return NULL;
     }
 
-    printf("server acccept the client...\n");
     return socket;
 }
 
@@ -163,7 +155,6 @@ bool socket_conectar(socket_t *self, const char *host, const char *service) {
     status = getaddrinfo(host, service, &hints, &result);
 
     if (status != 0) {
-        printf("Error in getaddrinfo: %s\n", gai_strerror(status));
         return 1;
     }
 
@@ -173,8 +164,6 @@ bool socket_conectar(socket_t *self, const char *host, const char *service) {
 
         if (status != -1) {
             esta_conectado = true;
-        } else {
-            printf("Error: %s\n", strerror(errno));
         }
     }
 

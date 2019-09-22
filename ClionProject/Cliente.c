@@ -1,11 +1,11 @@
 #include "Cliente.h"
 #include "socket.h"
 
+#define TAMANIO_TABLERO 722
 #define COMANDO_GET "G"
-#define COMANDO_PUT "P"
 #define COMANDO_VERIFY "V"
 #define COMANDO_RESET "R"
-#define TAMANIO_TABLERO 722
+
 
 struct cliente {
     socket_t *socket;
