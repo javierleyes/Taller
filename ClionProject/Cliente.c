@@ -54,19 +54,16 @@ static void mostrar_respuesta(cliente_t *self) {
 
 static void comando_get(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_GET, sizeof(char));
-
     mostrar_respuesta(self);
 }
 
 static void comando_verify(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_VERIFY, sizeof(char));
-
     mostrar_respuesta(self);
 }
 
 static void comando_reset(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_RESET, sizeof(char));
-
     mostrar_respuesta(self);
 }
 

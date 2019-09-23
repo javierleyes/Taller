@@ -8,6 +8,11 @@
 #define LONGITUD_MENSAJE 8
 #define LONGITUD_MENSAJE_OK 3
 
+#define COMANDO_GET 'G'
+#define COMANDO_VERIFY 'V'
+#define COMANDO_RESET 'R'
+#define COMANDO_PUT 'P'
+
 #define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define OK "OK\n"
 #define ERROR "ERROR\n"
@@ -130,19 +135,19 @@ void servidor_escuchar(servidor_t *self) {
             socket_esta_activo = socket_recibir(socket_activo, comando, sizeof(char));
 
             switch (*comando) {
-                case 'G':
+                case COMANDO_GET:
                     comando_get(self, socket_activo);
                     break;
 
-                case 'V':
+                case COMANDO_VERIFY:
                     comando_verify(self, socket_activo);
                     break;
 
-                case 'R':
+                case COMANDO_RESET:
                     comando_reset(self, socket_activo);
                     break;
 
-                case 'P':
+                case COMANDO_PUT:
                     comando_put(self, socket_activo);
                     break;
             }
