@@ -40,9 +40,7 @@ static uint32_t calcular_longitud_mensaje(cliente_t *self) {
     return longitud_buffer;
 }
 
-static void comando_get(cliente_t *self) {
-    socket_enviar(self->socket, (char *) COMANDO_GET, sizeof(char));
-
+static void mostrar_respuesta(cliente_t *self) {
     uint32_t longitud_buffer = calcular_longitud_mensaje(self);
 
     char *buffer = calloc(longitud_buffer, sizeof(char));
@@ -52,34 +50,24 @@ static void comando_get(cliente_t *self) {
     printf("%s", buffer);
 
     free(buffer);
+}
+
+static void comando_get(cliente_t *self) {
+    socket_enviar(self->socket, (char *) COMANDO_GET, sizeof(char));
+
+    mostrar_respuesta(self);
 }
 
 static void comando_verify(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_VERIFY, sizeof(char));
 
-    uint32_t longitud_buffer = calcular_longitud_mensaje(self);
-
-    char *buffer = calloc(longitud_buffer, sizeof(char));
-
-    socket_recibir(self->socket, buffer, longitud_buffer * sizeof(char));
-
-    printf("%s", buffer);
-
-    free(buffer);
+    mostrar_respuesta(self);
 }
 
 static void comando_reset(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_RESET, sizeof(char));
 
-    uint32_t longitud_buffer = calcular_longitud_mensaje(self);
-
-    char *buffer = calloc(longitud_buffer, sizeof(char));
-
-    socket_recibir(self->socket, buffer, longitud_buffer * sizeof(char));
-
-    printf("%s", buffer);
-
-    free(buffer);
+    mostrar_respuesta(self);
 }
 
 //*************************************** FUNCIONES ************************************************
