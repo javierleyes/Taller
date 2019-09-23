@@ -5,7 +5,7 @@
 
 #define CANTIDAD_CLIENTES 1
 #define TAMANIO_TABLERO 722
-#define LONGITUD_MENSAJE 4
+#define LONGITUD_MENSAJE 8
 
 #define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define OK "OK\n"
