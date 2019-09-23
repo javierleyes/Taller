@@ -118,12 +118,11 @@ void cliente_destruir(cliente_t *self) {
 }
 
 void cliente_recibir_comandos(cliente_t *self) {
-
     char *input = calloc(13, sizeof(char));
     char *comando = calloc(8, sizeof(char));
     char *comando_compuesto = calloc(4, sizeof(char));
 
-    fgets(input, 13, stdin);
+    fgets(input, 14, stdin);
 
     while (strcmp(input, INPUT_EXIT) != 0) {
 
@@ -165,7 +164,7 @@ void cliente_recibir_comandos(cliente_t *self) {
             }
         }
 
-        fgets(input, 13, stdin);
+        fgets(input, 14, stdin);
     }
 
     socket_shutdown(self->socket);
