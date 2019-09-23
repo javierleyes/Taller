@@ -116,7 +116,7 @@ void cliente_destruir(cliente_t *self) {
 }
 
 void cliente_recibir_comandos(cliente_t *self) {
-    char *input = calloc(13, sizeof(char));
+    char *input = calloc(14, sizeof(char));
     char *comando = calloc(8, sizeof(char));
     char *comando_compuesto = calloc(4, sizeof(char));
 
@@ -124,7 +124,7 @@ void cliente_recibir_comandos(cliente_t *self) {
 
     while (strcmp(input, INPUT_EXIT) != 0) {
 
-        strncpy(comando, input, (7 * sizeof(char)));
+        strncpy(comando, input, 7);
 
         if (strcmp(comando, INPUT_VERIFY) == 0) {
 
