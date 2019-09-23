@@ -20,39 +20,39 @@ socket_t *socket_inicializar() {
 }
 
 int socket_enviar(socket_t *self, char *buffer, size_t total) {
-    int enviados = 0;
-    int bytes = 0;
+    int sent = 0;
+    int b = 0;
     bool socket_valido = true;
 
-    while (enviados < total && socket_valido) {
-        bytes = send(self->socket_tcp,&buffer[enviados],total-enviados,MSG_NOSIGNAL);
+    while (sent < total && socket_valido) {
+        b = send(self->socket_tcp,&buffer[sent],total-sent,MSG_NOSIGNAL);
 
-        if (bytes <= 0) {
+        if (b <= 0) {
             socket_valido = false;
         } else {
-            enviados += bytes;
+            sent += b;
         }
     }
 
     if (socket_valido) {
-        return enviados;
+        return sent;
     }
 
     return -1;
 }
 
 bool socket_recibir(socket_t *self, char *buffer, size_t total) {
-    int recibidos = 0;
-    int bytes = 0;
+    int recibido = 0;
+    int b = 0;
     bool socket_valido = true;
 
-    while (recibidos < total && socket_valido) {
-        bytes = recv(self->socket_tcp,&buffer[recibidos],total-recibidos,MSG_NOSIGNAL);
+    while (recibido < total && socket_valido) {
+        b = recv(self->socket_tcp,&buffer[recibido],total-recibido,MSG_NOSIGNAL);
 
-        if (bytes <= 0) {
+        if (b <= 0) {
             return false;
         } else {
-            recibidos += bytes;
+            recibido += b;
         }
     }
 
