@@ -24,7 +24,7 @@ struct cliente {
     socket_t *socket;
 };
 
-//*************************************** FUNCIONES PRIVADAS ***************************************
+// *********************************************** FUNCIONES PRIVADAS ***********************************************
 
 static uint32_t calcular_longitud_mensaje(cliente_t *self) {
     char *longitud = calloc(LONGITUD_MENSAJE, sizeof(char));
@@ -67,7 +67,24 @@ static void comando_reset(cliente_t *self) {
     mostrar_respuesta(self);
 }
 
-//*************************************** FUNCIONES ************************************************
+static void comando_put(cliente_t *self, char *input) {
+    uint8_t valor = input[4];
+    uint8_t fila = input[9];
+    uint8_t columna = input[11];
+
+    char *buffer = calloc(4, sizeof(char));
+    strncpy(buffer, COMANDO_PUT, sizeof(char));
+
+    memset(buffer + 1, valor, sizeof(uint8_t));
+    memset(buffer + 2, fila, sizeof(uint8_t));
+    memset(buffer + 3, columna, sizeof(uint8_t));
+
+    socket_enviar(self->socket, buffer, 4 * sizeof(char));
+
+    mostrar_respuesta(self);
+}
+
+// ************************************************ FUNCIONES ************************************************
 
 cliente_t *cliente_inicializar(char *host, char *service) {
     bool esta_conectado = false;
@@ -134,26 +151,16 @@ void cliente_recibir_comandos(cliente_t *self) {
 
                     if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
 
-                        uint8_t valor = input[4];
-                        uint8_t fila = input[9];
-                        uint8_t columna = input[11];
-
-                        char *buffer = calloc(4, sizeof(char));
-                        strncpy(buffer, COMANDO_PUT, sizeof(char));
-                        memset(buffer + 1, valor, sizeof(uint8_t));
-                        memset(buffer + 2, fila, sizeof(uint8_t));
-                        memset(buffer + 3, columna, sizeof(uint8_t));
-
-                        socket_enviar(self->socket, buffer, 4 * sizeof(char));
-
-                        char *respuesta = calloc(TAMANIO_TABLERO, sizeof(char));
-
-                        socket_recibir(self->socket, respuesta, TAMANIO_TABLERO * sizeof(char));
-
-                        printf("%s", respuesta);
-
-                        free(buffer);
-                        free(respuesta);
+                        comando_put(self, input);
+//
+//                        char *respuesta = calloc(TAMANIO_TABLERO, sizeof(char));
+//
+//                        socket_recibir(self->socket, respuesta, TAMANIO_TABLERO * sizeof(char));
+//
+//                        printf("%s", respuesta);
+//
+//                        free(buffer);
+//                        free(respuesta);
 
                     } else {
                         printf(VALOR_FUERA_DE_RANGO);

@@ -7,6 +7,7 @@
 #define TAMANIO_TABLERO 722
 #define LONGITUD_MENSAJE 8
 #define LONGITUD_MENSAJE_OK 3
+#define LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE 36
 
 #define COMANDO_GET 'G'
 #define COMANDO_VERIFY 'V'
@@ -86,7 +87,15 @@ static void comando_put(servidor_t *self, socket_t *socket_activo) {
     if (tablero_put(self->tablero, atoi(valor), atoi(fila), atoi(columna))) {
         comando_get(self, socket_activo);
     } else {
-        socket_enviar(socket_activo, CELDA_NO_MODIFICABLE, strlen(CELDA_NO_MODIFICABLE) + 1);
+        char *respuesta = calloc (LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE + LONGITUD_MENSAJE, sizeof(char));
+
+        snprintf(respuesta, 4 * sizeof(uint32_t),"%x", htonl(LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE));
+
+        strncat(respuesta, CELDA_NO_MODIFICABLE, LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE);
+
+        socket_enviar(socket_activo, respuesta, LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE + LONGITUD_MENSAJE);
+
+        free(respuesta);
     }
 }
 
