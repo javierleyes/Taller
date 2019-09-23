@@ -18,7 +18,7 @@
 
 #define FUERA_DE_RANGO "Error en el valor ingresado. Rango soportado: [1,9]\n"
 #define INDICES_ERROR_RANGO "Error en los indices. Rango soportado: [1,9]\n"
-#define MODO_NO_SOPORTADO "Modo no soportado \n"
+#define USO "Modo no soportado \n"
 
 struct cliente {
     socket_t *socket;
@@ -147,7 +147,7 @@ void cliente_recibir_comandos(cliente_t *self) {
                     printf("%s", INDICES_ERROR_RANGO);
                 }
             } else {
-                printf("%s", MODO_NO_SOPORTADO);
+                printf("%s", USO);
             }
         }
 
