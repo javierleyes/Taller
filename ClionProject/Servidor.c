@@ -6,6 +6,7 @@
 #define CANTIDAD_CLIENTES 1
 #define TAMANIO_TABLERO 722
 #define LONGITUD_MENSAJE 8
+#define LONGITUD_MENSAJE_OK 3
 
 #define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define OK "OK\n"
@@ -38,15 +39,34 @@ static void comando_get(servidor_t *self, socket_t *socket_activo) {
 }
 
 static void comando_verify(servidor_t *self, socket_t *socket_activo) {
+    char *respuesta;
+
     if (tablero_verify(self->tablero)) {
-        socket_enviar(socket_activo, OK, 6 * sizeof(char));
+        respuesta = calloc (LONGITUD_MENSAJE_OK + LONGITUD_MENSAJE, sizeof(char));
+
+        strncat(respuesta, "0", 1);
+        snprintf(respuesta + 1, 4 * sizeof(uint32_t),"%x", htonl(LONGITUD_MENSAJE_OK));
+
+        strncat(respuesta, OK, LONGITUD_MENSAJE_OK);
+
+        socket_enviar(socket_activo, respuesta, LONGITUD_MENSAJE_OK + LONGITUD_MENSAJE);
     } else {
-        socket_enviar(socket_activo, ERROR, 6 * sizeof(char));
+        respuesta = calloc (6 + LONGITUD_MENSAJE, sizeof(char));
+
+        strncat(respuesta, "0", 1);
+        snprintf(respuesta + 1, 4 * sizeof(uint32_t),"%x", htonl(6));
+
+        strncat(respuesta, ERROR, 6);
+
+        socket_enviar(socket_activo, respuesta, 6 + LONGITUD_MENSAJE);
     }
+
+    free(respuesta);
 }
 
-static void comando_reset(servidor_t *self) {
+static void comando_reset(servidor_t *self, socket_t *socket_activo) {
     tablero_resetear(self->tablero);
+    comando_get(self, socket_activo);
 }
 
 static void comando_put(servidor_t *self, socket_t *socket_activo) {
@@ -119,8 +139,7 @@ void servidor_escuchar(servidor_t *self) {
                     break;
 
                 case 'R':
-                    comando_reset(self);
-                    comando_get(self, socket_activo);
+                    comando_reset(self, socket_activo);
                     break;
 
                 case 'P':

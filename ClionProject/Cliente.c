@@ -11,9 +11,10 @@
 #define INPUT_RESET "reset\n"
 #define INPUT_PUT "put"
 
-#define COMANDO_GET_SERVIDOR "G"
-#define COMANDO_VERIFY_SERVIDOR "V"
-#define COMANDO_RESET_SERVIDOR "R"
+#define COMANDO_GET "G"
+#define COMANDO_VERIFY "V"
+#define COMANDO_RESET "R"
+#define COMANDO_PUT "P"
 
 #define VALOR_FUERA_DE_RANGO "Error en el valor ingresado. Rango soportado: [1,9]\n"
 #define INDICES_FUERA_DE_RANGO "Error en los indices. Rango soportado: [1,9]\n"
@@ -25,9 +26,7 @@ struct cliente {
 
 //*************************************** FUNCIONES PRIVADAS ***************************************
 
-static void comando_get(cliente_t *self) {
-    socket_enviar(self->socket, (char *) COMANDO_GET_SERVIDOR, sizeof(char));
-
+static uint32_t calcular_longitud_mensaje(cliente_t *self) {
     char *longitud = calloc(LONGITUD_MENSAJE, sizeof(char));
 
     socket_recibir(self->socket, longitud, LONGITUD_MENSAJE);
@@ -36,22 +35,33 @@ static void comando_get(cliente_t *self) {
 
     uint32_t longitud_buffer = ntohl(longitud_mensaje);
 
+    free(longitud);
+
+    return longitud_buffer;
+}
+
+static void comando_get(cliente_t *self) {
+    socket_enviar(self->socket, (char *) COMANDO_GET, sizeof(char));
+
+    uint32_t longitud_buffer = calcular_longitud_mensaje(self);
+
     char *buffer = calloc(longitud_buffer, sizeof(char));
 
     socket_recibir(self->socket, buffer, longitud_buffer * sizeof(char));
 
     printf("%s", buffer);
 
-    free(longitud);
     free(buffer);
 }
 
 static void comando_verify(cliente_t *self) {
-    socket_enviar(self->socket, (char *) COMANDO_VERIFY_SERVIDOR, sizeof(char));
+    socket_enviar(self->socket, (char *) COMANDO_VERIFY, sizeof(char));
 
-    char *buffer = calloc(6, sizeof(char));
+    uint32_t longitud_buffer = calcular_longitud_mensaje(self);
 
-    socket_recibir(self->socket, buffer, 6 * sizeof(char));
+    char *buffer = calloc(longitud_buffer, sizeof(char));
+
+    socket_recibir(self->socket, buffer, longitud_buffer * sizeof(char));
 
     printf("%s", buffer);
 
@@ -59,11 +69,13 @@ static void comando_verify(cliente_t *self) {
 }
 
 static void comando_reset(cliente_t *self) {
-    socket_enviar(self->socket, (char *) COMANDO_RESET_SERVIDOR, sizeof(char));
+    socket_enviar(self->socket, (char *) COMANDO_RESET, sizeof(char));
 
-    char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
+    uint32_t longitud_buffer = calcular_longitud_mensaje(self);
 
-    socket_recibir(self->socket, buffer, TAMANIO_TABLERO * sizeof(char));
+    char *buffer = calloc(longitud_buffer, sizeof(char));
+
+    socket_recibir(self->socket, buffer, longitud_buffer * sizeof(char));
 
     printf("%s", buffer);
 
@@ -142,7 +154,7 @@ void cliente_recibir_comandos(cliente_t *self) {
                         uint8_t columna = input[11];
 
                         char *buffer = calloc(4, sizeof(char));
-                        strncpy(buffer, "P", sizeof(char));
+                        strncpy(buffer, COMANDO_PUT, sizeof(char));
                         memset(buffer + 1, valor, sizeof(uint8_t));
                         memset(buffer + 2, fila, sizeof(uint8_t));
                         memset(buffer + 3, columna, sizeof(uint8_t));
