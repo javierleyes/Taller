@@ -120,7 +120,7 @@ servidor_t *servidor_inicializar(char *service) {
         return NULL;
     }
 
-    socket_bind_and_listen(servidor->socket, service, CANTIDAD_CLIENTES);
+    socket_bind_listen(servidor->socket, service, CANTIDAD_CLIENTES);
 
     return servidor;
 }

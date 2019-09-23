@@ -19,40 +19,40 @@ socket_t *socket_inicializar() {
     return socket_server;
 }
 
-int socket_enviar(socket_t *self, char *buffer, size_t longitud) {
-    int bytes_enviados = 0;
+int socket_enviar(socket_t *self, char *buffer, size_t total) {
+    int enviados = 0;
     int bytes = 0;
     bool socket_valido = true;
 
-    while (bytes_enviados < longitud && socket_valido) {
-        bytes = send(self->socket_tcp, &buffer[bytes_enviados], longitud - bytes_enviados, MSG_NOSIGNAL);
+    while (enviados < total && socket_valido) {
+        bytes = send(self->socket_tcp,&buffer[enviados],total-enviados,MSG_NOSIGNAL);
 
         if (bytes <= 0) {
             socket_valido = false;
         } else {
-            bytes_enviados += bytes;
+            enviados += bytes;
         }
     }
 
     if (socket_valido) {
-        return bytes_enviados;
+        return enviados;
     }
 
     return -1;
 }
 
-bool socket_recibir(socket_t *self, char *buffer, size_t longitud) {
-    int bytes_recibidos = 0;
+bool socket_recibir(socket_t *self, char *buffer, size_t total) {
+    int recibidos = 0;
     int bytes = 0;
     bool socket_valido = true;
 
-    while (bytes_recibidos < longitud && socket_valido) {
-        bytes = recv(self->socket_tcp, &buffer[bytes_recibidos], longitud - bytes_recibidos, MSG_NOSIGNAL);
+    while (recibidos < total && socket_valido) {
+        bytes = recv(self->socket_tcp,&buffer[recibidos],total-recibidos,MSG_NOSIGNAL);
 
         if (bytes <= 0) {
             return false;
         } else {
-            bytes_recibidos += bytes;
+            recibidos += bytes;
         }
     }
 
@@ -68,24 +68,24 @@ void socket_destruir(socket_t *self) {
     free(self);
 }
 
-// ************************************************** server **************************************************
+// ******************************** server ********************************
 
-bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes) {
-    int status = 0;
+bool socket_bind_listen(socket_t *self, char *port, unsigned short cantidad) {
+    int s = 0;
     struct addrinfo hints;
     struct addrinfo *result;
     struct addrinfo *ptr;
     int val;
-    bool esta_asignado_escuchado = false;
+    bool escuchado = false;
 
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    status = getaddrinfo(NULL, (const char *) service, &hints, &result);
+    s = getaddrinfo(NULL, (const char *) port, &hints, &result);
 
-    if (status != 0) {
+    if (s != 0) {
         return false;
     }
 
@@ -96,28 +96,27 @@ bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantid
 
     // TIME_WAIT
     val = 1;
-    status = setsockopt(self->socket_tcp, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
-    if (status == -1) {
+    s = setsockopt(self->socket_tcp, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+    if (s == -1) {
         close(self->socket_tcp);
         freeaddrinfo(result);
         return false;
     }
 
     // BIND
-    for (ptr = result; ptr != NULL && esta_asignado_escuchado == false; ptr = ptr->ai_next) {
+    for (ptr = result; ptr != NULL && escuchado == false; ptr = ptr->ai_next) {
+        s = bind(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
 
-        status = bind(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
-
-        if (status != -1) {
-            esta_asignado_escuchado = true;
+        if (s != -1) {
+            escuchado = true;
         }
     }
 
     freeaddrinfo(ptr);
 
     // LISTEN
-    status = listen(self->socket_tcp, cantidad_clientes);
-    if (status == -1) {
+    s = listen(self->socket_tcp, cantidad);
+    if (s == -1) {
         return false;
     }
 
@@ -137,14 +136,14 @@ socket_t *socket_aceptar(socket_t *self) {
     return socket;
 }
 
-// ************************************************** client **************************************************
+// ******************************** client ********************************
 
 bool socket_conectar(socket_t *self, const char *host, const char *service) {
-    bool esta_conectado = false;
+    bool conectado = false;
     int status = 0;
 
     struct addrinfo hints;
-    struct addrinfo *result;
+    struct addrinfo *resultado;
     struct addrinfo *ptr;
 
     memset(&hints, 0, sizeof(struct addrinfo));
@@ -152,23 +151,22 @@ bool socket_conectar(socket_t *self, const char *host, const char *service) {
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = 0;
 
-    status = getaddrinfo(host, service, &hints, &result);
+    status = getaddrinfo(host, service, &hints, &resultado);
 
     if (status != 0) {
         return 1;
     }
 
-    for (ptr = result; ptr != NULL && esta_conectado == false; ptr = ptr->ai_next) {
-
+    for (ptr = resultado; ptr != NULL && conectado == false; ptr = ptr->ai_next) {
         status = connect(self->socket_tcp, ptr->ai_addr, ptr->ai_addrlen);
 
         if (status != -1) {
-            esta_conectado = true;
+            conectado = true;
         }
     }
 
-    freeaddrinfo(result);
+    freeaddrinfo(resultado);
 
-    return esta_conectado;
+    return conectado;
 }
 

@@ -15,9 +15,9 @@ typedef struct socket socket_t;
 
 socket_t *socket_inicializar();
 
-int socket_enviar(socket_t *self, char *buffer, size_t longitud);
+int socket_enviar(socket_t *self, char *buffer, size_t total);
 
-bool socket_recibir(socket_t *self, char *buffer, size_t longitud);
+bool socket_recibir(socket_t *self, char *buffer, size_t total);
 
 void socket_shutdown(socket_t *self);
 
@@ -25,7 +25,7 @@ void socket_destruir(socket_t *self);
 
 // ************************************************ server ************************************************
 
-bool socket_bind_and_listen(socket_t *self, char *service, unsigned short cantidad_clientes);
+bool socket_bind_listen(socket_t *self, char *port, unsigned short cantidad);
 
 socket_t *socket_aceptar(socket_t * self);
 
