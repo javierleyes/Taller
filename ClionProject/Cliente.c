@@ -2,7 +2,7 @@
 #include "socket.h"
 
 #define TAMANIO_TABLERO 722
-#define LONGITUD_MENSAJE 8
+#define LONGITUD 8
 #define BASE_HEXADECIMAL 16
 
 #define INPUT_EXIT "exit\n"
@@ -28,9 +28,9 @@ struct cliente {
 // *************************** FUNCIONES PRIVADAS ***************************
 
 static uint32_t _calcular_longitud_mensaje(cliente_t *self) {
-    char longitud[LONGITUD_MENSAJE];
+    char longitud[LONGITUD];
 
-    socket_recibir(self->socket, longitud, LONGITUD_MENSAJE);
+    socket_recibir(self->socket, longitud, LONGITUD);
 
     uint32_t longitud_mensaje = strtol(longitud, NULL, BASE_HEXADECIMAL);
 

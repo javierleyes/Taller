@@ -5,9 +5,9 @@
 
 #define CANTIDAD_CLIENTES 1
 #define TAMANIO_TABLERO 722
-#define LONGITUD_MENSAJE 8
-#define LONGITUD_MENSAJE_OK 3
-#define LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE 36
+#define LONGITUD 8
+#define LONGITUD_OK 3
+#define L_CELDA_NO_MODIFICABLE 36
 
 #define COMANDO_GET 'G'
 #define COMANDO_VERIFY 'V'
@@ -24,11 +24,10 @@ struct servidor {
     socket_t *socket;
 };
 
-// ********************************************* FUNCIONES PRIVADAS *********************************************
+// *************************** FUNCIONES PRIVADAS ***************************
 
 static void _comando_get(servidor_t *self, socket_t *socket_activo) {
-
-    char *respuesta = calloc (TAMANIO_TABLERO + LONGITUD_MENSAJE, sizeof(char));
+    char *respuesta = calloc(TAMANIO_TABLERO + LONGITUD, sizeof(char));
 
     snprintf(respuesta, 4 * sizeof(uint32_t),"%x", htonl(TAMANIO_TABLERO));
 
@@ -38,7 +37,7 @@ static void _comando_get(servidor_t *self, socket_t *socket_activo) {
 
     strncat(respuesta, tablero, TAMANIO_TABLERO);
 
-    socket_enviar(socket_activo, respuesta, TAMANIO_TABLERO + LONGITUD_MENSAJE);
+    socket_enviar(socket_activo, respuesta, TAMANIO_TABLERO + LONGITUD);
 
     free(tablero);
     free(respuesta);
@@ -48,23 +47,23 @@ static void _comando_verify(servidor_t *self, socket_t *socket_activo) {
     char *respuesta;
 
     if (tablero_verify(self->tablero)) {
-        respuesta = calloc (LONGITUD_MENSAJE_OK + LONGITUD_MENSAJE, sizeof(char));
+        respuesta = calloc(LONGITUD_OK + LONGITUD, sizeof(char));
 
         strncat(respuesta, "0", 1);
-        snprintf(respuesta + 1, 4 * sizeof(uint32_t),"%x", htonl(LONGITUD_MENSAJE_OK));
+        snprintf(respuesta+1,4*sizeof(uint32_t),"%x",htonl(LONGITUD_OK));
 
-        strncat(respuesta, OK, LONGITUD_MENSAJE_OK);
+        strncat(respuesta, OK, LONGITUD_OK);
 
-        socket_enviar(socket_activo, respuesta, LONGITUD_MENSAJE_OK + LONGITUD_MENSAJE);
+        socket_enviar(socket_activo,respuesta, LONGITUD_OK + LONGITUD);
     } else {
-        respuesta = calloc (6 + LONGITUD_MENSAJE, sizeof(char));
+        respuesta = calloc(6+LONGITUD,sizeof(char));
 
         strncat(respuesta, "0", 1);
-        snprintf(respuesta + 1, 4 * sizeof(uint32_t),"%x", htonl(6));
+        snprintf(respuesta+1,4*sizeof(uint32_t),"%x",htonl(6));
 
         strncat(respuesta, ERROR, 6);
 
-        socket_enviar(socket_activo, respuesta, 6 + LONGITUD_MENSAJE);
+        socket_enviar(socket_activo, respuesta, 6 + LONGITUD);
     }
 
     free(respuesta);
@@ -87,19 +86,19 @@ static void _comando_put(servidor_t *self, socket_t *socket_activo) {
     if (tablero_put(self->tablero, atoi(valor), atoi(fila), atoi(columna))) {
         _comando_get(self, socket_activo);
     } else {
-        char *respuesta = calloc (LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE + LONGITUD_MENSAJE, sizeof(char));
+        char *resp = calloc(L_CELDA_NO_MODIFICABLE + LONGITUD, sizeof(char));
 
-        snprintf(respuesta, 4 * sizeof(uint32_t),"%x", htonl(LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE));
+        snprintf(resp,4*sizeof(uint32_t),"%x",htonl(L_CELDA_NO_MODIFICABLE));
 
-        strncat(respuesta, CELDA_NO_MODIFICABLE, LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE);
+        strncat(resp, CELDA_NO_MODIFICABLE, L_CELDA_NO_MODIFICABLE);
 
-        socket_enviar(socket_activo, respuesta, LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE + LONGITUD_MENSAJE);
+        socket_enviar(socket_activo, resp, L_CELDA_NO_MODIFICABLE + LONGITUD);
 
-        free(respuesta);
+        free(resp);
     }
 }
 
-// ************************************************** FUNCIONES **************************************************
+// ******************************** FUNCIONES ********************************
 
 servidor_t *servidor_inicializar(char *service) {
     servidor_t *servidor = calloc(1, sizeof(servidor_t));
@@ -128,20 +127,18 @@ servidor_t *servidor_inicializar(char *service) {
 void servidor_escuchar(servidor_t *self) {
     socket_t *socket_activo;
     bool continuar_escuchando = true;
-    bool socket_esta_activo = true;
+    bool esta_activo = true;
 
     socket_activo = socket_aceptar(self->socket);
 
     char *comando = calloc(1, sizeof(char));
 
     while (continuar_escuchando) {
-
         if (socket_activo == NULL) {
             printf("Error: %s\n", strerror(errno));
             continuar_escuchando = false;
         } else {
-
-            socket_esta_activo = socket_recibir(socket_activo, comando, sizeof(char));
+            esta_activo = socket_recibir(socket_activo, comando, sizeof(char));
 
             switch (*comando) {
                 case COMANDO_GET:
@@ -161,7 +158,7 @@ void servidor_escuchar(servidor_t *self) {
                     break;
             }
 
-            if (!socket_esta_activo) {
+            if (!esta_activo) {
                 continuar_escuchando = false;
             }
         }

@@ -23,13 +23,13 @@ void socket_shutdown(socket_t *self);
 
 void socket_destruir(socket_t *self);
 
-// ************************************************ server ************************************************
+// ******************************** server ********************************
 
 bool socket_bind_listen(socket_t *self, char *port, unsigned short cantidad);
 
 socket_t *socket_aceptar(socket_t * self);
 
-// ************************************************ client ************************************************
+// ******************************** client ********************************
 
 bool socket_conectar(socket_t *self, const char *host, const char *service);
 
