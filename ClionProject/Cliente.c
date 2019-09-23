@@ -16,15 +16,16 @@
 #define COMANDO_RESET "R"
 #define COMANDO_PUT "P"
 
-#define VALOR_FUERA_DE_RANGO "Error en el valor ingresado. Rango soportado: [1,9]\n"
-#define INDICES_FUERA_DE_RANGO "Error en los indices. Rango soportado: [1,9]\n"
+#define FUERA_DE_RANGO "Error en el valor ingresado. Rango soportado: [1,9]\n"
+#define INDICES_ERROR_RANGO "Error en los indices. Rango soportado: [1,9]\n"
 #define MODO_NO_SOPORTADO "Modo no soportado \n"
 
 struct cliente {
     socket_t *socket;
 };
 
-// *********************************************** FUNCIONES PRIVADAS ***********************************************
+
+// *************************** FUNCIONES PRIVADAS ***************************
 
 static uint32_t _calcular_longitud_mensaje(cliente_t *self) {
     char longitud[LONGITUD_MENSAJE];
@@ -82,7 +83,7 @@ static void _comando_put(cliente_t *self, char *input) {
     _mostrar_respuesta(self);
 }
 
-// ************************************************ FUNCIONES ************************************************
+// ******************************** FUNCIONES ********************************
 
 cliente_t *cliente_inicializar(char *host, char *service) {
     bool esta_conectado = false;
@@ -123,42 +124,30 @@ void cliente_recibir_comandos(cliente_t *self) {
     fgets(input, 14, stdin);
 
     while (strcmp(input, INPUT_EXIT) != 0) {
-
         strncpy(comando, input, 7);
 
         if (strcmp(comando, INPUT_VERIFY) == 0) {
-
             _comando_verify(self);
-
         } else if (strcmp(comando, INPUT_GET) == 0) {
-
             _comando_get(self);
 
         } else if (strcmp(comando, INPUT_RESET) == 0) {
-
             _comando_reset(self);
-
         } else {
             strncpy(comando_compuesto, input, 3);
-
             if (strcmp(comando_compuesto, INPUT_PUT) == 0) {
-
                 if ((((input[9] - '0') > 0) && ((input[9] - '0') < 10)) &&
                     (((input[11] - '0') > 0) && ((input[11] - '0') < 10))) {
-
                     if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
-
                         _comando_put(self, input);
-
                     } else {
-                        printf(VALOR_FUERA_DE_RANGO);
+                        printf("%s", FUERA_DE_RANGO);
                     }
-
                 } else {
-                    printf(INDICES_FUERA_DE_RANGO);
+                    printf("%s", INDICES_ERROR_RANGO);
                 }
             } else {
-                printf(MODO_NO_SOPORTADO);
+                printf("%s", MODO_NO_SOPORTADO);
             }
         }
 
