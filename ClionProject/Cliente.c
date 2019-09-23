@@ -27,15 +27,13 @@ struct cliente {
 // *********************************************** FUNCIONES PRIVADAS ***********************************************
 
 static uint32_t _calcular_longitud_mensaje(cliente_t *self) {
-    char *longitud = calloc(LONGITUD_MENSAJE, sizeof(char));
+    char longitud[LONGITUD_MENSAJE];
 
     socket_recibir(self->socket, longitud, LONGITUD_MENSAJE);
 
     uint32_t longitud_mensaje = strtol(longitud, NULL, BASE_HEXADECIMAL);
 
     uint32_t longitud_buffer = ntohl(longitud_mensaje);
-
-    free(longitud);
 
     return longitud_buffer;
 }
@@ -45,7 +43,7 @@ static void _mostrar_respuesta(cliente_t *self) {
 
     char *buffer = calloc(longitud_buffer, sizeof(char));
 
-    socket_recibir(self->socket, buffer, longitud_buffer * sizeof(char));
+    socket_recibir(self->socket, buffer, longitud_buffer);
 
     printf("%s", buffer);
 
