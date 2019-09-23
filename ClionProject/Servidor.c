@@ -26,7 +26,7 @@ struct servidor {
 
 // ********************************************* FUNCIONES PRIVADAS *********************************************
 
-static void comando_get(servidor_t *self, socket_t *socket_activo) {
+static void _comando_get(servidor_t *self, socket_t *socket_activo) {
 
     char *respuesta = calloc (TAMANIO_TABLERO + LONGITUD_MENSAJE, sizeof(char));
 
@@ -44,7 +44,7 @@ static void comando_get(servidor_t *self, socket_t *socket_activo) {
     free(respuesta);
 }
 
-static void comando_verify(servidor_t *self, socket_t *socket_activo) {
+static void _comando_verify(servidor_t *self, socket_t *socket_activo) {
     char *respuesta;
 
     if (tablero_verify(self->tablero)) {
@@ -70,12 +70,12 @@ static void comando_verify(servidor_t *self, socket_t *socket_activo) {
     free(respuesta);
 }
 
-static void comando_reset(servidor_t *self, socket_t *socket_activo) {
+static void _comando_reset(servidor_t *self, socket_t *socket_activo) {
     tablero_resetear(self->tablero);
-    comando_get(self, socket_activo);
+    _comando_get(self, socket_activo);
 }
 
-static void comando_put(servidor_t *self, socket_t *socket_activo) {
+static void _comando_put(servidor_t *self, socket_t *socket_activo) {
     char *valor = calloc(1, sizeof(char));
     char *fila = calloc(1, sizeof(char));
     char *columna = calloc(1, sizeof(char));
@@ -85,7 +85,7 @@ static void comando_put(servidor_t *self, socket_t *socket_activo) {
     socket_recibir(socket_activo, columna, sizeof(char));
 
     if (tablero_put(self->tablero, atoi(valor), atoi(fila), atoi(columna))) {
-        comando_get(self, socket_activo);
+        _comando_get(self, socket_activo);
     } else {
         char *respuesta = calloc (LONGITUD_MENSAJE_CELDA_NO_MODIFICABLE + LONGITUD_MENSAJE, sizeof(char));
 
@@ -145,19 +145,19 @@ void servidor_escuchar(servidor_t *self) {
 
             switch (*comando) {
                 case COMANDO_GET:
-                    comando_get(self, socket_activo);
+                    _comando_get(self, socket_activo);
                     break;
 
                 case COMANDO_VERIFY:
-                    comando_verify(self, socket_activo);
+                    _comando_verify(self, socket_activo);
                     break;
 
                 case COMANDO_RESET:
-                    comando_reset(self, socket_activo);
+                    _comando_reset(self, socket_activo);
                     break;
 
                 case COMANDO_PUT:
-                    comando_put(self, socket_activo);
+                    _comando_put(self, socket_activo);
                     break;
             }
 

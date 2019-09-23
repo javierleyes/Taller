@@ -26,7 +26,7 @@ struct cliente {
 
 // *********************************************** FUNCIONES PRIVADAS ***********************************************
 
-static uint32_t calcular_longitud_mensaje(cliente_t *self) {
+static uint32_t _calcular_longitud_mensaje(cliente_t *self) {
     char *longitud = calloc(LONGITUD_MENSAJE, sizeof(char));
 
     socket_recibir(self->socket, longitud, LONGITUD_MENSAJE);
@@ -40,8 +40,8 @@ static uint32_t calcular_longitud_mensaje(cliente_t *self) {
     return longitud_buffer;
 }
 
-static void mostrar_respuesta(cliente_t *self) {
-    uint32_t longitud_buffer = calcular_longitud_mensaje(self);
+static void _mostrar_respuesta(cliente_t *self) {
+    uint32_t longitud_buffer = _calcular_longitud_mensaje(self);
 
     char *buffer = calloc(longitud_buffer, sizeof(char));
 
@@ -52,22 +52,22 @@ static void mostrar_respuesta(cliente_t *self) {
     free(buffer);
 }
 
-static void comando_get(cliente_t *self) {
+static void _comando_get(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_GET, sizeof(char));
-    mostrar_respuesta(self);
+    _mostrar_respuesta(self);
 }
 
-static void comando_verify(cliente_t *self) {
+static void _comando_verify(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_VERIFY, sizeof(char));
-    mostrar_respuesta(self);
+    _mostrar_respuesta(self);
 }
 
-static void comando_reset(cliente_t *self) {
+static void _comando_reset(cliente_t *self) {
     socket_enviar(self->socket, (char *) COMANDO_RESET, sizeof(char));
-    mostrar_respuesta(self);
+    _mostrar_respuesta(self);
 }
 
-static void comando_put(cliente_t *self, char *input) {
+static void _comando_put(cliente_t *self, char *input) {
     uint8_t valor = input[4];
     uint8_t fila = input[9];
     uint8_t columna = input[11];
@@ -81,7 +81,7 @@ static void comando_put(cliente_t *self, char *input) {
 
     socket_enviar(self->socket, buffer, 4 * sizeof(char));
 
-    mostrar_respuesta(self);
+    _mostrar_respuesta(self);
 }
 
 // ************************************************ FUNCIONES ************************************************
@@ -131,15 +131,15 @@ void cliente_recibir_comandos(cliente_t *self) {
 
         if (strcmp(comando, INPUT_VERIFY) == 0) {
 
-            comando_verify(self);
+            _comando_verify(self);
 
         } else if (strcmp(comando, INPUT_GET) == 0) {
 
-            comando_get(self);
+            _comando_get(self);
 
         } else if (strcmp(comando, INPUT_RESET) == 0) {
 
-            comando_reset(self);
+            _comando_reset(self);
 
         } else {
             strncpy(comando_compuesto, input, 3);
@@ -151,16 +151,7 @@ void cliente_recibir_comandos(cliente_t *self) {
 
                     if (((input[4] - '0') > 0) && ((input[4] - '0') < 10)) {
 
-                        comando_put(self, input);
-//
-//                        char *respuesta = calloc(TAMANIO_TABLERO, sizeof(char));
-//
-//                        socket_recibir(self->socket, respuesta, TAMANIO_TABLERO * sizeof(char));
-//
-//                        printf("%s", respuesta);
-//
-//                        free(buffer);
-//                        free(respuesta);
+                        _comando_put(self, input);
 
                     } else {
                         printf(VALOR_FUERA_DE_RANGO);
