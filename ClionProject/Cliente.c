@@ -2,6 +2,7 @@
 #include "socket.h"
 
 #define TAMANIO_TABLERO 722
+#define LONGITUD_MENSAJE 8
 
 #define INPUT_EXIT "exit\n"
 #define INPUT_VERIFY "verify\n"
@@ -24,7 +25,17 @@ struct cliente {
 //*************************************** FUNCIONES PRIVADAS ***************************************
 
 static void comando_get(cliente_t *self) {
-    socket_enviar(self->socket, (char *)COMANDO_GET_SERVIDOR, sizeof(char));
+    socket_enviar(self->socket, (char *) COMANDO_GET_SERVIDOR, sizeof(char));
+
+    char *longitud = calloc(8, sizeof(char));
+    socket_recibir(self->socket, longitud, LONGITUD_MENSAJE);
+
+
+    uint32_t longitud_mensaje = strtol(longitud, NULL, 16);
+
+    uint32_t variable = ntohl(longitud_mensaje);
+
+    printf("%d", variable);
 
     char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
 
@@ -36,7 +47,7 @@ static void comando_get(cliente_t *self) {
 }
 
 static void comando_verify(cliente_t *self) {
-    socket_enviar(self->socket, (char *)COMANDO_VERIFY_SERVIDOR, sizeof(char));
+    socket_enviar(self->socket, (char *) COMANDO_VERIFY_SERVIDOR, sizeof(char));
 
     char *buffer = calloc(6, sizeof(char));
 
@@ -48,7 +59,7 @@ static void comando_verify(cliente_t *self) {
 }
 
 static void comando_reset(cliente_t *self) {
-    socket_enviar(self->socket, (char *)COMANDO_RESET_SERVIDOR, sizeof(char));
+    socket_enviar(self->socket, (char *) COMANDO_RESET_SERVIDOR, sizeof(char));
 
     char *buffer = calloc(TAMANIO_TABLERO, sizeof(char));
 
@@ -100,7 +111,7 @@ void cliente_recibir_comandos(cliente_t *self) {
 
     fgets(input, 13, stdin);
 
-    while(strcmp(input, INPUT_EXIT) != 0) {
+    while (strcmp(input, INPUT_EXIT) != 0) {
 
         strncpy(comando, input, (7 * sizeof(char)));
 

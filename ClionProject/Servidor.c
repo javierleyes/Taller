@@ -5,6 +5,7 @@
 
 #define CANTIDAD_CLIENTES 1
 #define TAMANIO_TABLERO 722
+#define LONGITUD_MENSAJE 4
 
 #define NOMBRE_ARCHIVO_SUDOKU "board.txt"
 #define OK "OK\n"
@@ -19,13 +20,21 @@ struct servidor {
 // ********************************************* FUNCIONES PRIVADAS *********************************************
 
 static void comando_get(servidor_t *self, socket_t *socket_activo) {
-    char *response = calloc(TAMANIO_TABLERO, sizeof(char));
 
-    tablero_get(self->tablero, response);
+    char *respuesta = calloc (TAMANIO_TABLERO + LONGITUD_MENSAJE, sizeof(char));
 
-    socket_enviar(socket_activo, response, TAMANIO_TABLERO * sizeof(char));
+    snprintf(respuesta, 4 * sizeof(uint32_t),"%x", htonl(TAMANIO_TABLERO));
 
-    free(response);
+    char *tablero = calloc(TAMANIO_TABLERO, sizeof(char));
+
+    tablero_get(self->tablero, tablero);
+
+    strncat(respuesta, tablero, TAMANIO_TABLERO);
+
+    socket_enviar(socket_activo, respuesta, TAMANIO_TABLERO + LONGITUD_MENSAJE);
+
+    free(tablero);
+    free(respuesta);
 }
 
 static void comando_verify(servidor_t *self, socket_t *socket_activo) {
