@@ -11,26 +11,26 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct socket socket_t;
+typedef struct socket_tcp socket_tcp_t;
 
-socket_t *socket_inicializar();
+socket_tcp_t *socket_inicializar();
 
-int socket_enviar(socket_t *self, char *buffer, size_t total);
+int socket_enviar(socket_tcp_t *self, char *buffer, size_t total);
 
-bool socket_recibir(socket_t *self, char *buffer, size_t total);
+bool socket_recibir(socket_tcp_t *self, char *buffer, size_t total);
 
-void socket_shutdown(socket_t *self);
+void socket_shutdown(socket_tcp_t *self);
 
-void socket_destruir(socket_t *self);
+void socket_destruir(socket_tcp_t *self);
 
 // ******************************** server ********************************
 
-bool socket_bind_listen(socket_t *self, char *port, unsigned short cantidad);
+bool socket_bind_listen(socket_tcp_t *self, char *port);
 
-socket_t *socket_aceptar(socket_t * self);
+socket_tcp_t *socket_aceptar(socket_tcp_t * self);
 
 // ******************************** client ********************************
 
-bool socket_conectar(socket_t *self, const char *host, const char *service);
+bool socket_conectar(socket_tcp_t *self, const char *host, const char *port);
 
 #endif //SOCKET_SERVER_H

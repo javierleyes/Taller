@@ -21,7 +21,7 @@
 #define USO "Modo no soportado \n"
 
 struct cliente {
-    socket_t *socket;
+    socket_tcp_t *socket;
 };
 
 

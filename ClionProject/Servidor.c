@@ -3,7 +3,6 @@
 #include "Servidor.h"
 #include "socket.h"
 
-#define CANTIDAD_CLIENTES 1
 #define TAMANIO_TABLERO 722
 #define LONGITUD 8
 #define LONGITUD_OK 3
@@ -21,12 +20,12 @@
 
 struct servidor {
     tablero_t *tablero;
-    socket_t *socket;
+    socket_tcp_t *socket;
 };
 
 // *************************** FUNCIONES PRIVADAS ***************************
 
-static void _comando_get(servidor_t *self, socket_t *socket_activo) {
+static void _comando_get(servidor_t *self, socket_tcp_t *socket_activo) {
     char *respuesta = calloc(TAMANIO_TABLERO + LONGITUD, sizeof(char));
 
     snprintf(respuesta, 4 * sizeof(uint32_t),"%x", htonl(TAMANIO_TABLERO));
@@ -43,7 +42,7 @@ static void _comando_get(servidor_t *self, socket_t *socket_activo) {
     free(respuesta);
 }
 
-static void _comando_verify(servidor_t *self, socket_t *socket_activo) {
+static void _comando_verify(servidor_t *self, socket_tcp_t *socket_activo) {
     char *respuesta;
 
     if (tablero_verify(self->tablero)) {
@@ -69,12 +68,12 @@ static void _comando_verify(servidor_t *self, socket_t *socket_activo) {
     free(respuesta);
 }
 
-static void _comando_reset(servidor_t *self, socket_t *socket_activo) {
+static void _comando_reset(servidor_t *self, socket_tcp_t *socket_activo) {
     tablero_resetear(self->tablero);
     _comando_get(self, socket_activo);
 }
 
-static void _comando_put(servidor_t *self, socket_t *socket_activo) {
+static void _comando_put(servidor_t *self, socket_tcp_t *socket_activo) {
     char *valor = calloc(1, sizeof(char));
     char *fila = calloc(1, sizeof(char));
     char *columna = calloc(1, sizeof(char));
@@ -119,13 +118,13 @@ servidor_t *servidor_inicializar(char *service) {
         return NULL;
     }
 
-    socket_bind_listen(servidor->socket, service, CANTIDAD_CLIENTES);
+    socket_bind_listen(servidor->socket, service);
 
     return servidor;
 }
 
 void servidor_escuchar(servidor_t *self) {
-    socket_t *socket_activo;
+    socket_tcp_t *socket_activo;
     bool continuar_escuchando = true;
     bool esta_activo = true;
 
