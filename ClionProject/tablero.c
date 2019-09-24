@@ -113,10 +113,15 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
 
     while ((valor_inicial = fgetc(handler_tablero_inicial)) != EOF) {
         if ((valor_inicial != ' ') && (valor_inicial != '\n')) {
-            tablero->iniciales[posicion].modificable = (valor_inicial == '0') ? true : false;
-            tablero->iniciales[posicion].valor = (valor_inicial - '0');
+            if (valor_inicial == '0') {
+                tablero->iniciales[posicion].modificable = true;
+                tablero->juego[posicion].modificable = true;
+            } else {
+                tablero->iniciales[posicion].modificable = false;
+                tablero->juego[posicion].modificable = false;
+            }
 
-            tablero->juego[posicion].modificable = (valor_inicial == '0') ? true : false;
+            tablero->iniciales[posicion].valor = (valor_inicial - '0');
             tablero->juego[posicion].valor = (valor_inicial - '0');
 
             posicion++;
@@ -128,74 +133,74 @@ tablero_t *tablero_inicializar(const char *nombre_archivo) {
     return tablero;
 }
 
-void tablero_get(tablero_t *self, char *respuesta) {
+void tablero_get(tablero_t *self, char *resp) {
     int posicion = 0;
 
-    strncpy(respuesta + posicion, BORDE_TABLERO, LONGITUD_FILA);
+    strncpy(resp + posicion, BORDE_TABLERO, LONGITUD_FILA);
     posicion += LONGITUD_FILA;
 
     for (int j = 0; j < TOTAL_CELDAS; j += CANTIDAD_CELDAS_FILA) {
         for (int i = j; i < (j + CANTIDAD_CELDAS_FILA); i += 3) {
-            strncpy(respuesta + posicion, "U", 1);
+            strncpy(resp + posicion, "U", 1);
             posicion++;
 
             if (self->juego[i].valor != 0) {
-                strncpy(respuesta + posicion, " ", 1);
+                strncpy(resp + posicion, " ", 1);
                 posicion++;
 
-                memset(respuesta + posicion, (self->juego[i].valor + '0'), sizeof(char));
+                memset(resp+posicion,(self->juego[i].valor+'0'),sizeof(char));
                 posicion++;
 
-                strncpy(respuesta + posicion, " ", 1);
+                strncpy(resp + posicion, " ", 1);
                 posicion++;
             } else {
-                strncpy(respuesta + posicion, "   ", 3);
+                strncpy(resp + posicion, "   ", 3);
                 posicion += 3;
             }
 
-            strncpy(respuesta + posicion, "|", 1);
+            strncpy(resp + posicion, "|", 1);
             posicion++;
 
             if (self->juego[i + 1].valor != 0) {
-                strncpy(respuesta + posicion, " ", 1);
+                strncpy(resp + posicion, " ", 1);
                 posicion++;
 
-                memset(respuesta + posicion, (self->juego[i + 1].valor + '0'), sizeof(char));
+                memset(resp+posicion,(self->juego[i+1].valor+'0'),sizeof(char));
                 posicion++;
 
-                strncpy(respuesta + posicion, " ", 1);
+                strncpy(resp + posicion, " ", 1);
                 posicion++;
             } else {
-                strncpy(respuesta + posicion, "   ", 3);
+                strncpy(resp + posicion, "   ", 3);
                 posicion += 3;
             }
 
-            strncpy(respuesta + posicion, "|", 1);
+            strncpy(resp + posicion, "|", 1);
             posicion++;
 
             if (self->juego[i + 2].valor != 0) {
-                strncpy(respuesta + posicion, " ", 1);
+                strncpy(resp + posicion, " ", 1);
                 posicion++;
 
-                memset(respuesta + posicion, (self->juego[i + 2].valor + '0'), sizeof(char));
+                memset(resp+posicion,(self->juego[i+2].valor+'0'),sizeof(char));
                 posicion++;
 
-                strncpy(respuesta + posicion, " ", 1);
+                strncpy(resp + posicion, " ", 1);
                 posicion++;
             } else {
-                strncpy(respuesta + posicion, "   ", 3);
+                strncpy(resp + posicion, "   ", 3);
                 posicion += 3;
             }
         }
 
-        strncpy(respuesta + posicion, "U\n", 2);
+        strncpy(resp + posicion, "U\n", 2);
         posicion += 2;
 
-        if ((((j + 1) % 19) == 0) || (((j + 1) % 46) == 0) || (((j + 1) % 73) == 0)) {
-            strncpy(respuesta + posicion, BORDE_TABLERO, LONGITUD_FILA);
+        if ((((j+1)%19)==0) || (((j+1)%46)==0) || (((j+1)%73)==0)) {
+            strncpy(resp + posicion, BORDE_TABLERO, LONGITUD_FILA);
             posicion += LONGITUD_FILA;
         } else {
-            strncpy(respuesta + posicion, SEPARADOR_LINEA, LONGITUD_FILA);
+            strncpy(resp + posicion, SEPARADOR_LINEA, LONGITUD_FILA);
             posicion += LONGITUD_FILA;
         }
     }
